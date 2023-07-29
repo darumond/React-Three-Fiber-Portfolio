@@ -84,7 +84,7 @@ const SkillsSection = () => {
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-               
+
             </div>
 
 
@@ -98,13 +98,13 @@ const SkillsSection = () => {
                 <p className='ml-3  '>HTML5</p>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <p className=''>CSS3</p>
-                
+
             </div>
 
             <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" />
 
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
@@ -119,10 +119,34 @@ const SkillsSection = () => {
             <div className="text-xl font-bold mt-2  flex flex-row">
                 <p className='ml-2  '>Java</p>
                 <p className='ml-7'>Javascript</p>
-                <p className='ml-5'>Typescript</p>
+                <p className='ml-7'>Typescript</p>
                 <p className='ml-6'>Python</p>
             </div>
-            <h2 className="text-5xl font-bold mt-10">Frameworks/Tools</h2>
+
+            <h2 className="text-5xl font-bold mt-10">Frameworks/Libraries</h2>
+            <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
+                &nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" />
+
+                &nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" />
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" />
+
+
+            </div>
+
+
+
+            <div className="text-xl font-bold mt-2  flex flex-row">
+                <p className='ml-1'>React</p>
+                <p className='ml-9'>Vue</p>
+                <p className='ml-6'>Tailwind</p>
+                <p className='ml-5'>ThreeJS</p>
+            </div>
 
             <h2 className="text-5xl font-bold mt-10">Languages</h2>
             <div className='mt-8 space-y-4'>
