@@ -35,7 +35,7 @@ const AboutSection = () => {
                 <span className="px-1 italic">Luc NGUYEN</span>
             </h1>
             <p className="text-lg text-gray-600 mt-4">
-                I am currently a VR Software Engineer at Dassault Systèmes <br /> and EPITA Student
+                I am currently a VR Software Engineer at Dassault Systèmes <br /> and a student at EPITA.
             </p>
             <div className='flex flex-row space-x-4'>
                 <Button size="large" variant="contained">
@@ -53,28 +53,6 @@ const AboutSection = () => {
     )
 }
 
-const skills = [
-    {
-        title: "Threejs / React Three Fiber",
-        level: 80,
-    },
-    {
-        title: "React / React Native",
-        level: 90,
-    },
-    {
-        title: "Nodejs",
-        level: 90,
-    },
-    {
-        title: "Typescript",
-        level: 60,
-    },
-    {
-        title: "3D Modeling",
-        level: 40,
-    },
-];
 const languages = [
     {
         title: "🇫🇷 French",
@@ -84,21 +62,77 @@ const languages = [
         title: "🇺🇸 English",
         level: 85,
     },
+    {
+        title: "🇻🇳 Vietnamese",
+        level: 20,
+    },
 ];
 
 const SkillsSection = () => {
+
     return (
         <Section>
-            <h2 className="text-5xl font-bold">Skills</h2>
+            <h2 className="text-5xl font-bold">Programming Languages</h2>
+            <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" className="h-24" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+               
+            </div>
+
+
+            <div className="text-xl font-bold mt-2 ml-5 flex flex-row">
+                <p>C++</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <p className='ml-1'>C</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <p className='ml-7'>C#</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <p className='ml-3  '>HTML5</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <p className=''>CSS3</p>
+                
+            </div>
+
+            <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" />
+
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" />
+
+            </div>
+
+
+
+            <div className="text-xl font-bold mt-2  flex flex-row">
+                <p className='ml-2  '>Java</p>
+                <p className='ml-7'>Javascript</p>
+                <p className='ml-5'>Typescript</p>
+                <p className='ml-6'>Python</p>
+            </div>
+            <h2 className="text-5xl font-bold mt-10">Frameworks/Tools</h2>
+
             <h2 className="text-5xl font-bold mt-10">Languages</h2>
             <div className='mt-8 space-y-4'>
-                {languages.map((lng,index)=>(
+                {languages.map((lng, index) => (
                     <div className='w-64' key={index}>
-                         <h3 className='text-wl font-bold text-gray-800'>{lng.title}</h3>
-                         <div className='h-2 w-full bg-gray-200 rounded-full mt-2'>
+                        <h3 className='text-wl font-bold text-gray-800'>{lng.title}</h3>
+                        <div className='h-2 w-full bg-gray-200 rounded-full mt-2'>
                             <div className='h-full bg-indigo-500 rounded-full'
-                            style={{width: `${lng.level}%`}}/>
-                         </div>
+                                style={{ width: `${lng.level}%` }} />
+                        </div>
                     </div>
                 ))}
             </div>
