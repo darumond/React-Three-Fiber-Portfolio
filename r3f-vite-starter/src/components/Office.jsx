@@ -158,7 +158,7 @@ export function Office(props) {
       <mesh
         name="Plane001_3"
         geometry={nodes.Plane001_3.geometry}
-        material={textureMaterial}
+        material={textureGlassMaterial}
       />
       </group>
     </group>
