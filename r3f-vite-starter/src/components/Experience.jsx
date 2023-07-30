@@ -1,14 +1,21 @@
 import { OrbitControls } from "@react-three/drei";
 import {Office} from "./Office";
-export const Experience = () => {
+import { motion } from "framer-motion-3d";
+import { Avatar } from "./Avatar";
+export const Experience = (props) => {
+  const { section } = props;
   return (
     <>
       <ambientLight intensity={1} />
-      <group position={[1.5, 2, 3]}
+      <motion.group position={[1.5, 2, 3]}
         scale={[0.9, 0.9, 0.9]}
-        rotation-y={-Math.PI / 4}>
-      <Office />
-      </group>
+        rotation-y={-Math.PI / 4}
+        animate={{
+          y: section === 0 ? 0 : -1,
+        }}>
+        
+      <Office section={section} />
+      </motion.group>
     </>
   );
 };

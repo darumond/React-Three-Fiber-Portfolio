@@ -7,8 +7,12 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import React from "react";
 
 import * as THREE from "three";
-
+import { motion } from "framer-motion-3d";
+import { useFrame } from "@react-three/fiber";
+import { animate,useMotionValue } from "framer-motion";
+import { useEffect } from "react";
 export function Office(props) {
+  const { section } = props;
   const { nodes, materials } = useGLTF('models/myroom.gltf')
   const texture = useTexture("textures/baked.jpg");
   texture.flipY = false;
@@ -16,12 +20,26 @@ export function Office(props) {
 
   const textureMaterial = new THREE.MeshStandardMaterial({
     map: texture,
+    transparent: true,
+    opacity: 1,
   });
 
   const textureGlassMaterial = new THREE.MeshStandardMaterial({
     map: texture,
     transparent: true,
     opacity: 0.42,
+  });
+  const textureOpacity = useMotionValue(0);
+  const glassTextureOpacity = useMotionValue(0);
+
+  useEffect(() => {
+    animate(textureOpacity, section === 0 ? 1 : 0);
+    animate(glassTextureOpacity, section === 0 ? 0.42 : 0);
+  }, [section]);
+
+  useFrame(() => {
+    textureMaterial.opacity = textureOpacity.get();
+    textureGlassMaterial.opacity = glassTextureOpacity.get();
   });
   return (
     <group {...props} dispose={null}>
@@ -99,7 +117,9 @@ export function Office(props) {
         <mesh geometry={nodes.SM_ShelfSM_Shelf1_1.geometry}  material={textureMaterial} />
         <mesh geometry={nodes.SM_ShelfSM_Shelf1_1_1.geometry} material={textureMaterial} />
       </group>
-      <group position={[-1.802, 2.876, -2.937]}>
+      <group
+      name="LavaLamp"
+      position={[-1.802, 2.876, -2.937]}>
         <mesh geometry={nodes['Node-Mesh001'].geometry}  material={textureMaterial} />
         <mesh geometry={nodes['Node-Mesh001_1'].geometry}  material={textureMaterial} />
         <mesh geometry={nodes['Node-Mesh001_2'].geometry}  material={textureMaterial} />
