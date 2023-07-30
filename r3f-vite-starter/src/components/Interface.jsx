@@ -3,13 +3,28 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import { motion } from "framer-motion";
 const Section = (props) => {
     const { children } = props;
 
-    return <section className={`
+    return <motion.section className={`
     h-screen w-screen p-8 max-w-screen-2xl mx-auto
     flex flex-col items-start justify-center
-    `}>{children}</section>;
+    `}
+        initial={{
+            opacity: 0,
+            y: 50,
+        }}
+        whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 1,
+                delay: 0.5,
+            },
+        }}
+
+    >{children}</motion.section>;
 };
 
 export const Interface = () => {
@@ -20,7 +35,7 @@ export const Interface = () => {
             <Section>
                 <h1>Projects</h1>
             </Section>
-            <ContactSection/>
+            <ContactSection />
         </div>);
 }
 
@@ -32,10 +47,39 @@ const AboutSection = () => {
                 <br />
                 <span className="px-1 italic">Luc NGUYEN</span>
             </h1>
-            <p className="text-lg text-gray-600 mt-4">
+            <motion.p className="text-lg text-gray-600 mt-4"
+                initial={{
+                    opacity: 0,
+                    y: 25,
+                }}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 1,
+                        },
+                    }
+                }>
+
                 I am currently a VR Software Engineer at Dassault Systèmes <br /> and a student at EPITA.
-            </p>
-            <div className='flex flex-row space-x-4'>
+            </motion.p>
+            <motion.div className='flex flex-row space-x-4 mt-4'
+                initial={{
+                    opacity: 0,
+                    y: 25,
+                }}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 1.5,
+                        },
+                    }
+                }>
                 <Button size="large" variant="contained">
                     <Typography>
                         Resume
@@ -46,7 +90,7 @@ const AboutSection = () => {
                     </Typography></Button>
 
 
-            </div>
+            </motion.div>
         </Section>
     )
 }
@@ -65,24 +109,119 @@ const languages = [
         level: 20,
     },
 ];
+const init = {
+    opacity: 0,
+    y: 25,
+};
+const whileInViewInit =
+{
+    opacity: 1,
+    y: 0,
+    transition: {
+        duration: 1,
+        delay: 0.2,
+    },
+};
+const images = [
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        init,
+        whileInView: whileInViewInit,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
+        init,
+        whileInView: whileInViewInit,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
+        init,
+        whileInView: whileInViewInit,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        init,
+        whileInView: whileInViewInit,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        init,
+        whileInView: whileInViewInit,
+    },
+];
+const images2 = [
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+        spaces: 5,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        spaces: 7,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        spaces: 6,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        spaces: 4,
+    },
 
+];
+const images3 = [
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        spaces: 2,
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+        spaces: 3
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+        spaces: 5
+    },
+    {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg",
+        spaces: 0
+    },
+]
 const SkillsSection = () => {
-
     return (
         <Section>
-            <h2 className="text-5xl font-bold">Programming Languages</h2>
-            <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" className="h-24" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <motion.div whileInView={"visible"}>
 
+            
+            <motion.h2 className="text-5xl font-bold"
+                initial={init}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 0.1,
+                        },
+                    }
+                }
+            >Programming Languages</motion.h2>
+            <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                {images.map((image, index) => (
+                    <React.Fragment key={index}>
+                        <motion.img
+                            src={image.src}
+                            initial={image.init}
+                            whileInView={{
+                                ...image.whileInView,
+                                transition: {
+                                    ...image.whileInView.transition,
+                                    delay: index * 0.1 + 0.2,
+                                },
+                            }}
+                        />
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </React.Fragment>
+                ))}
             </div>
 
 
@@ -100,16 +239,25 @@ const SkillsSection = () => {
             </div>
 
             <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" />
-
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" />
-
+                {images2.map((image, index) => (
+                    <React.Fragment key={index}>
+                        <motion.img
+                            src={image.src}
+                            initial={init}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                transition: {
+                                    duration: 1,
+                                    delay: index * 0.1 + 0.2,
+                                },
+                            }}
+                        />
+                        {Array.from({ length: image.spaces }, (_, i) => (
+                            <>&nbsp;</>
+                        ))}
+                    </React.Fragment>
+                ))}
             </div>
 
 
@@ -121,20 +269,38 @@ const SkillsSection = () => {
                 <p className='ml-6'>Python</p>
             </div>
 
-            <h2 className="text-5xl font-bold mt-10">Frameworks/Libraries</h2>
+            <motion.h2 className="text-5xl font-bold mt-10"
+                initial={init}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 0.1,
+                        },
+                    }
+                }>Frameworks/Libraries</motion.h2>
             <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
-                &nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" />
-
-                &nbsp;&nbsp;&nbsp;
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" />
-
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" />
-
-
+                {images3.map((image, index) => (
+                    <React.Fragment key={index}>
+                        <motion.img
+                            src={image.src}
+                            initial={init}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                transition: {
+                                    duration: 1,
+                                    delay: index * 0.1 + 0.2,
+                                },
+                            }}
+                        />
+                        {Array.from({ length: image.spaces }, (_, i) => (
+                            <>&nbsp;</>
+                        ))}
+                    </React.Fragment>
+                ))}
             </div>
 
 
@@ -146,18 +312,61 @@ const SkillsSection = () => {
                 <p className='ml-5'>ThreeJS</p>
             </div>
 
-            <h2 className="text-5xl font-bold mt-10">Languages</h2>
-            <div className='mt-8 space-y-4'>
-                {languages.map((lng, index) => (
-                    <div className='w-64' key={index}>
-                        <h3 className='text-wl font-bold text-gray-800'>{lng.title}</h3>
-                        <div className='h-2 w-full bg-gray-200 rounded-full mt-2'>
-                            <div className='h-full bg-indigo-500 rounded-full'
-                                style={{ width: `${lng.level}%` }} />
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <motion.h2 className="text-5xl font-bold mt-10"
+            initial={init}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 0.1,
+                        },
+                    }
+                }>Languages</motion.h2>
+             <div className=" mt-8 space-y-4">
+            {languages.map((lng, index) => (
+              <div className="w-64" key={index}>
+                <motion.h3
+                  className="text-xl font-bold text-gray-800"
+                  initial={{
+                    opacity: 0,
+                  }}
+                  variants={{
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        duration: 1,
+                        delay: 1+index * 0.2,
+                      },
+                    },
+                  }}
+                >
+                  {lng.title}
+                </motion.h3>
+                <div className="h-2 w-full bg-gray-200 rounded-full mt-2">
+                  <motion.div
+                    className="h-full bg-indigo-500 rounded-full "
+                    style={{ width: `${lng.level}%` }}
+                    initial={{
+                      scaleX: 0,
+                      originX: 0,
+                    }}
+                    variants={{
+                      visible: {
+                        scaleX: 1,
+                        transition: {
+                          duration: 1,
+                          delay: 1 + index * 0.2,
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+      </motion.div>
         </Section>
     );
 };
