@@ -63,7 +63,7 @@ const AboutSection = () => {
                     }
                 }>
 
-                I am currently a VR Software Engineer at Dassault Systèmes <br /> and a student at EPITA.
+                I am currently a VR Software Engineer<br /> at Dassault Systèmes and a student at EPITA.
             </motion.p>
             <motion.div className='flex flex-row space-x-4 mt-4'
                 initial={{
