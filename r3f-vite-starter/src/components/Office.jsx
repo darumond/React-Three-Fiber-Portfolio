@@ -133,7 +133,7 @@ export function Office(props) {
         <mesh geometry={nodes.mesh434900071_4.geometry}  material={textureMaterial} />
         <mesh geometry={nodes.mesh434900071_5.geometry} material={textureMaterial}   />
       </group>
-      <group name="keyboard" position={[-0.044, 0.981, -1.346]} rotation={[0, -0.165, 0]}>
+      <group name="keyboard" position={[0.1, 0.981, -1.346]} rotation={[0, -0.3, 0]}>
         <mesh geometry={nodes.mesh425587018.geometry}  material={textureMaterial} />
         <mesh geometry={nodes.mesh425587018_1.geometry}  material={textureMaterial}/>
         <mesh geometry={nodes.mesh425587018_2.geometry}  material={textureMaterial} />
@@ -155,7 +155,7 @@ export function Office(props) {
         <mesh geometry={nodes.Houseplant_7_2.geometry}  material={textureMaterial} />
         <mesh geometry={nodes.Houseplant_7_3.geometry} material={textureMaterial} />
       </group>
-      <group name="chair" position={[-0.278, 0, -0.708]} rotation={[0, -0.376, 0]}>
+      <group name="chair" position={[-0.278, 0, -0.708]} rotation={[0, -0.7, 0]}>
         <mesh geometry={nodes['Node-Mesh'].geometry} material={textureMaterial} />
         <mesh geometry={nodes['Node-Mesh_1'].geometry}  material={textureMaterial} />
       </group>

@@ -37,16 +37,22 @@ export const Experience = (props) => {
         }}>
         
       <Office section={section} />
-      
+      <group
+          name="CharacterSpot"
+          position={[-0.15, 0.25, -0.8]}
+          rotation={[-Math.PI, 0.7, -Math.PI]}
+        >
+          <Avatar animation={section === 0 ? "Luc_Typing" : "Luc_Standing"} />
+        </group>
       </motion.group>
       <motion.group position={[0,-1.5,-10]}
       animate={{
         z: section === 1 ? 0 : -10,
         y:  section === 1 ? -viewport.height : -1.5,
       }}>
-      <group scale={[4,4,4]} position-y={-4}>
+      {/* <group scale={[4,4,4]} position-y={-4}>
         <Avatar animation={section === 0 ? "Luc_Falling" : "Luc_Standing"} />
-      </group>
+      </group> */}
       </motion.group>
     </>
   );
