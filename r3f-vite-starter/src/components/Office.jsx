@@ -45,7 +45,7 @@ export function Office(props) {
   });
   return (
     <group {...props} dispose={null}>
-      <mesh position={[0.43, 1.35, -1.65]} rotation={[-Math.PI / 18, -0.5, -0.07]}>
+      <mesh position={[0.43, 1.34, -1.65]} rotation={[-Math.PI / 18, -0.5, -0.07]}>
         <planeBufferGeometry args={[0.65, 0.37]} /> {/* Adjust the size of the plane as needed */}
         <meshStandardMaterial map={textureVSCode} transparent opacity={1} />
       </mesh>
