@@ -7,6 +7,7 @@ import { useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { framerMotionConfig } from "../config";
 import * as THREE from "three";
+import { Background } from "./Background";
 export const Experience = (props) => {
   const { menuOpened } = props;
   const [section, setSection] = useState(0);
@@ -50,6 +51,7 @@ export const Experience = (props) => {
 
   return (
     <>
+    <Background />
       <motion.group position={[1.9136574669941304, 0.225, 2.395423702085502]} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
         animate={"" + section}
         transition={{
