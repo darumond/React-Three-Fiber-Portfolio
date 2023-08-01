@@ -19,6 +19,9 @@ export const Experience = (props) => {
   const cameraLookAtX = useMotionValue();
   const characterContainerAboutRef = useRef();
   useEffect(() => {
+    if(section !== 0) {
+      return;
+    }
     animate(cameraPositionX, menuOpened ? -5 : 0, {
       ...framerMotionConfig,
     });
@@ -29,6 +32,8 @@ export const Experience = (props) => {
 
   useEffect(() => {
     setCharacterAnimation("Luc_Falling");
+
+
     setTimeout(() => {
       setCharacterAnimation(section === 0 ? "Luc_Typing" : "Luc_Standing");
     }, 600);
@@ -51,7 +56,7 @@ export const Experience = (props) => {
 
   return (
     <>
-    <Background />
+      <Background />
       <motion.group position={[1.9136574669941304, 0.225, 2.395423702085502]} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
         animate={"" + section}
         transition={{

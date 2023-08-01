@@ -156,7 +156,7 @@ const images2 = [
     },
     {
         src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-        spaces: 7,
+        spaces: 8,
     },
     {
         src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
