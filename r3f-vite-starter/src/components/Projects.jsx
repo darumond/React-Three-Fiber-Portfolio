@@ -124,7 +124,7 @@ export const Projects = () => {
         y: 25,
     };
     return (
-      <motion.group position-y={-viewport.height * 2 + 1}
+      <motion.group position-y={-viewport.height * 2 - 0.5}
       >
         {projects.map((project, index) => (
           <motion.group
@@ -136,9 +136,6 @@ export const Projects = () => {
               z: currentProject === index ? -2 : -3,
               rotateX: currentProject === index ? 0 : -Math.PI / 3,
               rotateZ: currentProject === index ? 0 : -0.1 * Math.PI,
-            }}
-            transition={{
-              duration: 0.5,
             }}
         
           >
