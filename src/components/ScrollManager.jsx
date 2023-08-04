@@ -36,7 +36,6 @@ useFrame(() => {
   if (data.scroll.current > lastScroll.current && curSection === 0) {
     onSectionChange(1);
   }
-  console.log(data.scroll.current <= 1 / (data.pages - 1))
   if (data.scroll.current < lastScroll.current && lastScroll.current <= 1 / (data.pages - 1)) {
     onSectionChange(0);
   }

@@ -70,7 +70,7 @@ export const Experience = (props) => {
             scaleZ: 0.9,
           },
           1: {
-            y: -viewport.height + 1,
+            y: -viewport.height + 1.5,
             x: 0,
             z: 7,
             rotateX: 0,
@@ -115,7 +115,12 @@ export const Experience = (props) => {
         <Avatar animation={section === 0 ? "Luc_Falling" : "Luc_Standing"} />
       </group> */}
       </motion.group>
+      <motion.group animate={{
+         y: section === 1 ? -viewport.height : -1,
+      }}>
       <Projects />
+      </motion.group>
+     
     </>
   );
 };

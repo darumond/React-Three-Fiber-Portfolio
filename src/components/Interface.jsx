@@ -389,20 +389,21 @@ const ProjectsSection = () => {
 
     return (
         <Section>
-            <div className="text-5xl h-full w-full text-center font-bold">Projects <br/> <br/>
-            <button
+            <div className="text-5xl h-full w-full text-center font-bold mt-10">
+                <button
                     className="hover:text-indigo-600 transition-colors"
                     onClick={previousProject}
-                    
+
                 >
                     <ArrowCircleLeftOutlinedIcon style={iconStyle} />
                 </button>
+                Projects
 
                 <button
                     className="hover:text-indigo-600 transition-colors"
                     onClick={nextProject}
                 >
-                  <ArrowCircleRightOutlinedIcon style={iconStyle}/>
+                    <ArrowCircleRightOutlinedIcon style={iconStyle} />
                 </button>
             </div>
         </Section>
