@@ -20,7 +20,7 @@ export const Experience = (props) => {
   const cameraLookAtX = useMotionValue();
   const characterContainerAboutRef = useRef();
   useEffect(() => {
-    if(section !== 0) {
+    if (section !== 0) {
       return;
     }
     animate(cameraPositionX, menuOpened ? -5 : 0, {
@@ -42,7 +42,7 @@ export const Experience = (props) => {
 
   useFrame((state) => {
     let curSection = Math.floor(data.scroll.current * data.pages);
-
+    console.log(curSection)
     if (curSection > 3) {
       curSection = 3;
     }
@@ -85,6 +85,7 @@ export const Experience = (props) => {
             rotateY: -Math.PI / 5,
             rotateZ: 0,
           },
+
         }}>
         <Avatar animation={characterAnimation} />
       </motion.group>
@@ -116,11 +117,14 @@ export const Experience = (props) => {
       </group> */}
       </motion.group>
       <motion.group animate={{
-         y: section === 1 ? -viewport.height : -1,
+        y: section === 1 ? -viewport.height : -0.5,
+      }}
+      transition={{
+        duration: 0.7,
       }}>
-      <Projects />
+        <Projects />
       </motion.group>
-     
+
     </>
   );
 };
