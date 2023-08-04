@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { framerMotionConfig } from "../config";
 import * as THREE from "three";
 import { Background } from "./Background";
+import { Projects } from "./Projects";
 export const Experience = (props) => {
   const { menuOpened } = props;
   const [section, setSection] = useState(0);
@@ -114,6 +115,7 @@ export const Experience = (props) => {
         <Avatar animation={section === 0 ? "Luc_Falling" : "Luc_Standing"} />
       </group> */}
       </motion.group>
+      <Projects />
     </>
   );
 };
