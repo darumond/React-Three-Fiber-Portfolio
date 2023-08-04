@@ -7,12 +7,7 @@ import { atom, useAtom } from "jotai";
 import { useEffect, useRef,useState } from "react";
 
 export const projects = [
-  {
-    title: "Wawatmos",
-    url: "https://r3f-wawatmos-final.vercel.app/",
-    image: "projects/main.png",
-    description: "Recreating the Atmos Awwwards website with React Three Fiber",
-  },
+
   {
     title: "Portfolio",
     url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
@@ -20,10 +15,11 @@ export const projects = [
     description: "Learn how to bake a 3D model with Blender and use it in r3f",
   },
   {
-    title: "3D Avatar",
-    url: "https://www.youtube.com/watch?v=pGMKIyALcK0",
+    title: "Spider IDE",
+    url: "https://github.com/darumond/SpiderIDE",
     image: "projects/main.png",
-    description: "Learn how to use ReadyPlayerMe to create a 3D avatar",
+    description: "A minimalist IDE for student to create and send request easily",
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"],
   },
   {
     title: "Kanagame",
@@ -31,16 +27,13 @@ export const projects = [
     image: "projects/main.png",
     description: "Use React Three Fiber to create a 3D game",
   },
-  {
-    title: "Loader",
-    url: "https://www.youtube.com/watch?v=L12wIvuZTOY",
-    image: "projects/main.png",
-    description: "Create a loading screen for your r3f projects",
-  },
+
   
 ];
 
+
 const Project = (props) => {
+  const linebreak = "\n";  
   const { project, highlighted } = props;
   const [isHovered, setIsHovered] = useState(false);
 
@@ -75,26 +68,33 @@ const Project = (props) => {
             scale={[4, 2, 1]}
             url={project.image}
             toneMapped={false}
-            position-y={0.4}
+            position-y={0.75}
           />
           <Text
             maxWidth={2.5}
             anchorX={"left"}
             anchorY={"top"}
             fontSize={0.3}
-            position={[-1.5, -0.7, 0]}
+            position={[-2, -0.7, 0]}
           >
             {project.title.toUpperCase()}
           </Text>
           <Text
-            maxWidth={2.5}
+            maxWidth={3}
             anchorX="left"
             anchorY="top"
             fontSize={0.15}
-            position={[-1.5, -1, 0]}
+            position={[-2, -1.1, 0]}
           >
             {project.description}
           </Text>
+          {project.icon && (
+            <group position={[-0.2, -0.8, 0]} scale={[0.30, 0.30, 0.30]}>
+              {project.icon.map((iconUrl, idx) => (
+                <Image key={`icon_${idx}`} url={iconUrl} position={[idx * 1.2, 0, 0]} transparent={true} />
+              ))}
+            </group>
+          )}
         </>
       )}
       {isHovered && (
@@ -103,8 +103,8 @@ const Project = (props) => {
           anchorX="left"
           anchorY="top"
           fontSize={0.2}
-          position={[-1.5, 1, 0]} // Adjust the position as needed
-          color="white" // Set the color for the text
+          position={[-1.5, 1, 0]} 
+          color="white"
         >
           Test
         </Text>
@@ -134,7 +134,7 @@ export const Projects = () => {
               x: 0 + (index - currentProject) * (3.5 + gapSpace),
               y: currentProject === index ? 0 : -0.1,
               z: currentProject === index ? -2 : -3,
-              rotateX: currentProject === index ? 0 : -Math.PI / 3,
+              rotateX: currentProject === index ? -0.5 : -Math.PI / 3,
               rotateZ: currentProject === index ? 0 : -0.1 * Math.PI,
             }}
         
