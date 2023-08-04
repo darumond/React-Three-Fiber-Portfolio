@@ -47,17 +47,13 @@
       animate(bgOpacity, highlighted ? 0.7 : 0.4);
     }, [highlighted]);
 
-    useEffect(() => {
-      console.log("project: ", project.title)
-    }, [project]);
-
     useFrame(() => {
       background.current.material.opacity = bgOpacity.get();
     });
     const planeGeometryArgs = isCurrentProject ? [9.2, 7.4] : [4.1, 3.8];
     const imageSize = isCurrentProject ? [9.1,5, 1] : [4, 2, 1];
     const projectTitlePos = isCurrentProject ? [-4.50, -1.7, 0] : [-2, -0.7, 0];
-    const iconPos = isCurrentProject ? [-2.7, -1.8, 0] : [-0.2, -0.8, 0];
+    const iconPos = isCurrentProject ? [-2.7, -1.82, 0] : [-0.2, -0.8, 0];
     const descriptionPos = isCurrentProject ? [-4.5, -2.3, 0] : [-2, -1.1, 0];
     return (
       <group
