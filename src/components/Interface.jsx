@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { motion } from "framer-motion";
+import PoppinsBold from "../../public/Fonts/Poppins/Poppins-Bold.ttf";
+
 const Section = (props) => {
     const { children } = props;
 
@@ -381,12 +383,13 @@ const ProjectsSection = () => {
     const previousProject = () => {
         setCurrentProject((currentProject - 1 + projects.length) % projects.length);
     };
-    const iconSize = 70; // Change this value to adjust the icon size
+    const iconSize = 70;
 
     const iconStyle = {
         fontSize: iconSize,
     };
 
+      
     return (
         <Section>
             <div className="text-5xl h-full w-full text-center font-bold mt-10">
