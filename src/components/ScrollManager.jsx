@@ -36,8 +36,23 @@ useFrame(() => {
   if (data.scroll.current > lastScroll.current && curSection === 0) {
     onSectionChange(1);
   }
+  if (data.scroll.current > lastScroll.current && curSection === 1) {
+    onSectionChange(2);
+
+  }
+  if (data.scroll.current > lastScroll.current && curSection === 3) {
+    onSectionChange(4);
+  }
   if (data.scroll.current < lastScroll.current && lastScroll.current <= 1 / (data.pages - 1)) {
     onSectionChange(0);
+    return;
+  }
+  if (data.scroll.current < lastScroll.current && lastScroll.current <= 2 / (data.pages - 1)) {
+    onSectionChange(1);
+    return;
+  }
+  if (data.scroll.current < lastScroll.current && lastScroll.current <= 3/ (data.pages - 1)) {
+    onSectionChange(2);
   }
   lastScroll.current = data.scroll.current;
 });

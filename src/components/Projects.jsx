@@ -23,7 +23,7 @@ export const projects = [
     image: "projects/main.png",
     description: "A minimalist IDE for student to create and send request easily",
     icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
-    video: "projects/SpiderIDE.mp4"
+    video: "projects/SpiderIDE2.mp4"
   },
 
   {
