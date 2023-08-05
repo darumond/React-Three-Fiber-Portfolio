@@ -25,7 +25,7 @@ export const projects = [
     icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
     video: "projects/SpiderIDE.mp4"
   },
-  
+
   {
     title: "Kanagame",
     url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
@@ -34,8 +34,8 @@ export const projects = [
     icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"],
     video: "textures/vscode.mp4"
   },
-  
-  
+
+
 
 
 ];
@@ -59,6 +59,7 @@ const Project = (props) => {
   const projectTitlePos = isCurrentProject ? [-4, -1.7, 1] : [-1, -1, 1];
   const iconPos = isCurrentProject ? [-0.2, -2, 1] : [0.5, -1.2, 1];
   const descriptionPos = isCurrentProject ? [-4, -2.7, 1] : [-1, -1.7, 1];
+  const maxWidthDescription = isCurrentProject ? 6 : 2.5;
   const videoPos = isCurrentProject ? [7, 5] : [3, 2];
   const meshVideoPos = isCurrentProject ? [0.01, 0.99, 0.496] : [0.01, 0.5, 0.496];
   const fontSizeTitle = isCurrentProject ? 0.4 : 0.2;
@@ -89,14 +90,7 @@ const Project = (props) => {
       </mesh>
       {(
         <>
-          {/* <Image
-            scale={imageSize}
-            url={project.image}
-            toneMapped={false}
-            position-y={1}
-            position-z={1}
-          /> */}
-       
+
           <Text
             font="Fonts/Poppins/Poppins-Bold.ttf"
             maxWidth={2.5}
@@ -107,10 +101,10 @@ const Project = (props) => {
           >
             {project.title}
           </Text>
-          
+
           <Text
             font="Fonts/Poppins/Poppins-Regular.ttf"
-            maxWidth={6}
+            maxWidth={maxWidthDescription}
             anchorX="left"
             anchorY="top"
             fontSize={fontSizeDescription}
@@ -118,6 +112,9 @@ const Project = (props) => {
           >
             {project.description}
           </Text>
+
+
+
           {project.icon && (
             <group position={iconPos} scale={scaleIcon}>
               {project.icon.map((iconUrl, idx) => (
