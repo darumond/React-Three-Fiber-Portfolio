@@ -29,10 +29,10 @@ export const projects = [
   {
     title: "Chess Engine",
     url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
-    image: "projects/main.png",
-    description: "Use React Three Fiber to create a 3D game",
-    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"],
-    video: "textures/vscode.mp4"
+    image: "projects/ChessEngine.png",
+    description: "Chess Engine that can calculate every possible move with any depth",
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"],
+    video: "projects/SpiderIDE2.mp4"
   },
 
 
@@ -62,7 +62,7 @@ const Project = (props) => {
   const iconPos = isCurrentProject ? [-0.2, -2, 1] : [0.5, -1.2, 1];
   const descriptionPos = isCurrentProject ? [-4, -2.7, 1] : [-1, -1.7, 1];
   const maxWidthDescription = isCurrentProject ? 6 : 2.5;
-  const videoPos = isCurrentProject ? [8.6, 4.45] : [3, 2];
+  const videoPos = isCurrentProject ? [8.61, 4.5] : [3, 2];
   const meshVideoPos = isCurrentProject ? [0.01, 0.99, 0.696] : [0.01, 0.5, 0.496];
   const fontSizeTitle = isCurrentProject ? 0.4 : 0.2;
   const fontSizeDescription = isCurrentProject ? 0.15 : 0.1;
@@ -105,7 +105,7 @@ const Project = (props) => {
 
           <Text
             font="Fonts/Poppins/Poppins-Bold.ttf"
-            maxWidth={2.5}
+            maxWidth={4}
             anchorX={"left"}
             anchorY={"top"}
             fontSize={fontSizeTitle}
@@ -143,12 +143,6 @@ const Project = (props) => {
           <meshStandardMaterial map={videoTexture} transparent opacity={1} toneMapped={false} />
         </mesh>
       )}
-      {/* {(
-        <mesh position={meshVideoPos}>
-          <planeBufferGeometry args={videoPos} />
-          <meshStandardMaterial map={videoTexture} transparent opacity={1} toneMapped={false} />
-        </mesh>
-      )} */}
     </group>
   );
 };
