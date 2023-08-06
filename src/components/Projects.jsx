@@ -27,7 +27,7 @@ export const projects = [
   },
 
   {
-    title: "Kanagame",
+    title: "Chess Engine",
     url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
     image: "projects/main.png",
     description: "Use React Three Fiber to create a 3D game",
@@ -51,7 +51,9 @@ const Project = (props) => {
   useEffect(() => {
     animate(bgOpacity, highlighted ? 0.7 : 0.4);
   }, [highlighted]);
-
+  useEffect(() => {
+    console.log(isHovered);
+  }, [isHovered]);
   useFrame(() => {
     background.current.material.opacity = bgOpacity.get();
   });
@@ -60,12 +62,14 @@ const Project = (props) => {
   const iconPos = isCurrentProject ? [-0.2, -2, 1] : [0.5, -1.2, 1];
   const descriptionPos = isCurrentProject ? [-4, -2.7, 1] : [-1, -1.7, 1];
   const maxWidthDescription = isCurrentProject ? 6 : 2.5;
-  const videoPos = isCurrentProject ? [7, 5] : [3, 2];
-  const meshVideoPos = isCurrentProject ? [0.01, 0.99, 0.496] : [0.01, 0.5, 0.496];
+  const videoPos = isCurrentProject ? [8.6, 4.45] : [3, 2];
+  const meshVideoPos = isCurrentProject ? [0.01, 0.99, 0.696] : [0.01, 0.5, 0.496];
   const fontSizeTitle = isCurrentProject ? 0.4 : 0.2;
   const fontSizeDescription = isCurrentProject ? 0.15 : 0.1;
   const scaleIcon = isCurrentProject ? [0.40, 0.40, 0.40] : [0.20, 0.20, 0.20];
   const opacity = isCurrentProject ? 0.6 : 0.4;
+  const imageSize = isCurrentProject ? [8.75, 4.5, 0] : [3.5, 1.9, 1.5];
+  const imagePos = isCurrentProject ? [0,1,0.5] : [0.05,0.5,0.5];
   return (
     <group
       {...props}
@@ -90,6 +94,14 @@ const Project = (props) => {
       </mesh>
       {(
         <>
+          <Image
+            scale={imageSize}
+            url={project.image}
+            toneMapped={false}
+            position={imagePos}
+            
+
+          />
 
           <Text
             font="Fonts/Poppins/Poppins-Bold.ttf"
@@ -111,10 +123,8 @@ const Project = (props) => {
             position={descriptionPos}
           >
             {project.description}
+
           </Text>
-
-
-
           {project.icon && (
             <group position={iconPos} scale={scaleIcon}>
               {project.icon.map((iconUrl, idx) => (
@@ -122,14 +132,23 @@ const Project = (props) => {
               ))}
             </group>
           )}
+
+
+
         </>
       )}
-      {(
+      {isHovered && (
         <mesh position={meshVideoPos}>
           <planeBufferGeometry args={videoPos} />
           <meshStandardMaterial map={videoTexture} transparent opacity={1} toneMapped={false} />
         </mesh>
       )}
+      {/* {(
+        <mesh position={meshVideoPos}>
+          <planeBufferGeometry args={videoPos} />
+          <meshStandardMaterial map={videoTexture} transparent opacity={1} toneMapped={false} />
+        </mesh>
+      )} */}
     </group>
   );
 };
@@ -139,7 +158,7 @@ export const currentProjectAtom = atom(Math.floor(projects.length / 2));
 export const Projects = () => {
   const { viewport } = useThree();
   const [currentProject] = useAtom(currentProjectAtom);
-  const gapSpace = 2;
+  const gapSpace = 3;
   const init = {
     opacity: 0,
     y: 25,
