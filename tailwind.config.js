@@ -2,7 +2,25 @@
 export default {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    fontFamily: {
+      poppins: ['Poppins', 'sans-serif'],
+    },
+    fontStyle: {
+      italic: 'italic',
+    },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      'white': '#ffffff',
+      'purple-dark': '#2843a0',
+      'purple-light': '#3e59cf',
+      'midnight': '#121063',
+      'metal': '#565584',
+      'tahiti': '#3ab7bf',
+      'silver': '#ecebff',
+      'pink': '#9f8bc3',
+      'bermuda': '#78dcca',
+    },
   },
   plugins: [],
 }

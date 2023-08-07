@@ -57,7 +57,7 @@ export const Experience = (props) => {
   return (
     <>
       <Background />
-      <motion.group position={[1.9136574669941304, 0.225, 2.395423702085502]} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
+      <motion.group position={[3.30365746699, 0.225, 2.395423702085502]} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
         animate={"" + section}
         transition={{
           duration: 0.7,
@@ -89,7 +89,7 @@ export const Experience = (props) => {
         <Avatar animation={characterAnimation} />
       </motion.group>
       <ambientLight intensity={1} />
-      <motion.group position={[1.5, 2, 3]}
+      <motion.group position={[2.89, 2, 3]}
         scale={[0.9, 0.9, 0.9]}
         rotation-y={-Math.PI / 4}
         animate={{

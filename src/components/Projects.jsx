@@ -12,8 +12,8 @@ export const projects = [
     title: "Portfolio",
     url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
     image: "projects/main.png",
-    description: "Learn how to bake a 3D model with Blender and use it in r3f",
-    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
+    description: "My portfolio website made with ReactJS and ThreeJS",
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" ,"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg"],
 
     video: "textures/vscode.mp4"
   },
@@ -22,7 +22,7 @@ export const projects = [
     url: "https://github.com/darumond/SpiderIDE",
     image: "projects/main.png",
     description: "A minimalist IDE for student to create and send request easily",
-    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
+    icon: [ "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
     video: "projects/SpiderIDE2.mp4"
   },
 
@@ -104,7 +104,7 @@ const Project = (props) => {
           />
 
           <Text
-            font="Fonts/Poppins/Poppins-Bold.ttf"
+            font="../src/Fonts/Poppins/Poppins-Bold.ttf"
             maxWidth={4}
             anchorX={"left"}
             anchorY={"top"}
@@ -115,7 +115,7 @@ const Project = (props) => {
           </Text>
 
           <Text
-            font="Fonts/Poppins/Poppins-Regular.ttf"
+            font="../src/Fonts/Poppins/Poppins-Regular.ttf"
             maxWidth={maxWidthDescription}
             anchorX="left"
             anchorY="top"

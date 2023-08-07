@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('/Fonts/Poppins/Poppins-BlackItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
 #root {
   width: 100vw;
   height: 100vh;

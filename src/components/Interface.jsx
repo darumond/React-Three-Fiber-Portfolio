@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { motion } from "framer-motion";
-import PoppinsBold from "../../public/Fonts/Poppins/Poppins-Bold.ttf";
+import PoppinsBold from "../Fonts/Poppins/Poppins-Bold.ttf";
 
 const Section = (props) => {
     const { children } = props;
@@ -45,12 +45,13 @@ export const Interface = () => {
 const AboutSection = () => {
     return (
         <Section>
-            <h1 className="text-6xl font-extrabold leading-snug">
-                Hello, I am
-                <br />
-                <span className="px-1 italic">Luc NGUYEN</span>
+            <h1 className='text-xl font-poppins font-bold text-pink '>
+                Hello, my name is
             </h1>
-            <motion.p className="text-lg text-gray-600 mt-4"
+            <h1 className="text-5xl font-extrabold leading-snug font-poppins text-purple-dark">
+                <span >Luc NGUYEN.</span>
+            </h1>
+            <motion.p className="text-5xl font-extrabold font-poppins text-purple-light mt-4"
                 initial={{
                     opacity: 0,
                     y: 25,
@@ -66,7 +67,28 @@ const AboutSection = () => {
                     }
                 }>
 
-                I am currently a VR Software Engineer<br /> at Dassault Systèmes and a student at EPITA.
+                I'm a VR Software Engineer.
+                {/* <br /> at Dassault Systèmes and a student at EPITA. */}
+            </motion.p>
+
+            <motion.p className="text-xl font-extrabold font-poppins text-purple-light mt-4"
+                initial={{
+                    opacity: 0,
+                    y: 25,
+                }}
+                whileInView={
+                    {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                            duration: 1,
+                            delay: 1,
+                        },
+                    }
+                }>
+
+                I'm currently working 
+                at <span className='text-pink'>Dassault Systèmes </span> <br/> and a student at <span className='text-pink'> EPITA </span>.
             </motion.p>
             <motion.div className='flex flex-row space-x-4 mt-4'
                 initial={{
@@ -83,14 +105,14 @@ const AboutSection = () => {
                         },
                     }
                 }>
-                <Button size="large" variant="contained">
+                {/* <Button size="large" variant="contained">
                     <Typography>
                         Resume
                     </Typography></Button>
                 <Button size="large" variant="contained">
                     <Typography>
                         Contact
-                    </Typography></Button>
+                    </Typography></Button> */}
 
 
             </motion.div>
@@ -389,10 +411,10 @@ const ProjectsSection = () => {
         fontSize: iconSize,
     };
 
-      
+
     return (
         <Section>
-            <div className="text-5xl h-full w-full text-center font-bold mt-10">
+            <div className="text-6xl h-full w-full text-center  mt-10 font-poppins font-extrabold">
                 <button
                     className="hover:text-indigo-600 transition-colors"
                     onClick={previousProject}
