@@ -68,7 +68,6 @@ const AboutSection = () => {
                 }>
 
                 I'm a VR Software Engineer.
-                {/* <br /> at Dassault Systèmes and a student at EPITA. */}
             </motion.p>
 
             <motion.p className="text-xl font-extrabold font-poppins text-purple-light mt-4"
@@ -217,7 +216,7 @@ const SkillsSection = () => {
             <motion.div whileInView={"visible"}>
 
 
-                <motion.h2 className="text-5xl font-bold"
+                <motion.h2 className="text-2xl md:text-5xl font-bold"
                     initial={init}
                     whileInView={
                         {
@@ -230,7 +229,7 @@ const SkillsSection = () => {
                         }
                     }
                 >Programming Languages</motion.h2>
-                <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <div className="h-8 w-8 md:h-16 md:w-16 ml-1 mt-8 flex flex-row items-center">
                     {images.map((image, index) => (
                         <React.Fragment key={index}>
                             <motion.img
@@ -250,20 +249,20 @@ const SkillsSection = () => {
                 </div>
 
 
-                <div className="text-xl font-bold mt-2 ml-5 flex flex-row">
+                <div className="text-sm md:text-xl font-bold mt-2 ml-2 md:ml-5 flex flex-row">
                     <p>C++</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <p className='ml-1'>C</p>
+                    <p className='md:ml-1'>C</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <p className='ml-7'>C#</p>
+                    <p className='ml-5 md:ml-7'>C#</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <p className='ml-3  '>HTML5</p>
+                    <p className='ml-2 md:ml-3'>HTML5</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <p className=''>CSS3</p>
 
                 </div>
 
-                <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <div className="h-8 w-8 md:h-16 md:w-16 ml-1 mt-8 flex">
                     {images2.map((image, index) => (
                         <React.Fragment key={index}>
                             <motion.img
@@ -287,14 +286,14 @@ const SkillsSection = () => {
 
 
 
-                <div className="text-xl font-bold mt-2  flex flex-row">
-                    <p className='ml-2  '>Java</p>
-                    <p className='ml-7'>Javascript</p>
-                    <p className='ml-7'>Typescript</p>
-                    <p className='ml-6'>Python</p>
+                <div className="text-sm md:text-xl font-bold mt-2  flex flex-row">
+                    <p className='md:ml-2  '>Java</p>
+                    <p className='ml-6 md:ml-7'>Javascript</p>
+                    <p className='ml-5 md:ml-7'>Typescript</p>
+                    <p className='ml-7 md:ml-6'>Python</p>
                 </div>
 
-                <motion.h2 className="text-5xl font-bold mt-10"
+                <motion.h2 className="text-2xl md:text-5xl font-bold mt-10"
                     initial={init}
                     whileInView={
                         {
@@ -306,7 +305,7 @@ const SkillsSection = () => {
                             },
                         }
                     }>Frameworks/Libraries</motion.h2>
-                <div className="h-16 w-16 ml-1 mt-8 flex flex-row items-center">
+                <div className="h-8 w-8 md:h-16 md:w-16 ml-1 mt-8 flex flex-row items-center">
                     {images3.map((image, index) => (
                         <React.Fragment key={index}>
                             <motion.img
@@ -330,14 +329,14 @@ const SkillsSection = () => {
 
 
 
-                <div className="text-xl font-bold mt-2  flex flex-row">
-                    <p className='ml-1'>React</p>
-                    <p className='ml-9'>Vue</p>
-                    <p className='ml-6'>Tailwind</p>
-                    <p className='ml-5'>ThreeJS</p>
+                <div className="text-sm md:text-xl font-bold mt-2  flex flex-row">
+                    <p className='md:ml-1'>React</p>
+                    <p className='ml-4 md:ml-9'>Vue</p>
+                    <p className='ml-3 md:ml-6'>Tailwind</p>
+                    <p className='ml-4 md:ml-5'>ThreeJS</p>
                 </div>
 
-                <motion.h2 className="text-5xl font-bold mt-10"
+                <motion.h2 className="text-2xl md:text-5xl font-bold mt-10"
                     initial={init}
                     whileInView={
                         {
@@ -353,7 +352,7 @@ const SkillsSection = () => {
                     {languages.map((lng, index) => (
                         <div className="w-64" key={index}>
                             <motion.h3
-                                className="text-xl font-bold text-gray-800"
+                                className="text-sm md:text-xl font-bold text-gray-800"
                                 initial={{
                                     opacity: 0,
                                 }}
@@ -369,9 +368,9 @@ const SkillsSection = () => {
                             >
                                 {lng.title}
                             </motion.h3>
-                            <div className="h-2 w-full bg-gray-200 rounded-full mt-2">
+                            <div className="h-2 w-full bg-purple-light rounded-full mt-2">
                                 <motion.div
-                                    className="h-full bg-indigo-500 rounded-full "
+                                    className="h-full bg-purple-dark rounded-full "
                                     style={{ width: `${lng.level}%` }}
                                     initial={{
                                         scaleX: 0,
