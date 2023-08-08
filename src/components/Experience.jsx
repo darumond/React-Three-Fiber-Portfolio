@@ -44,7 +44,7 @@ export const Experience = (props) => {
       }
       else
       {
-        setCharacterAnimation("Luc_Standing");
+        setCharacterAnimation("Luc_Salute");
       }
       // setCharacterAnimation(section === 0 ? "Luc_Typing" : "Luc_Standing");
     }, 600);
