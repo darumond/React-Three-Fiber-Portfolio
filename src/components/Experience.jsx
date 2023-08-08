@@ -36,7 +36,17 @@ export const Experience = (props) => {
 
 
     setTimeout(() => {
-      setCharacterAnimation(section === 0 ? "Luc_Typing" : "Luc_Standing");
+      if(section === 0){
+        setCharacterAnimation("Luc_Typing");
+      }
+      else if(section === 1){
+        setCharacterAnimation("Luc_Listening");
+      }
+      else
+      {
+        setCharacterAnimation("Luc_Standing");
+      }
+      // setCharacterAnimation(section === 0 ? "Luc_Typing" : "Luc_Standing");
     }, 600);
   }, [section]);
 

@@ -22,12 +22,13 @@ export function Avatar(props) {
   const { animations: typingAnimation } = useFBX("animations/Typing.fbx")
   const { animations: standingAnimation } = useFBX("animations/Standing Idle.fbx")
   const { animations: fallingAnimation } = useFBX("animations/Falling Idle.fbx")
+  const { animations: ListeningMUsic } = useFBX("animations/Music.fbx")
 
   typingAnimation[0].name = "Luc_Typing" 
   standingAnimation[0].name = "Luc_Standing"
   fallingAnimation[0].name = "Luc_Falling"
-
-  const { actions } = useAnimations([typingAnimation[0],standingAnimation[0],fallingAnimation[0]], group)
+  ListeningMUsic[0].name = "Luc_Listening"
+  const { actions } = useAnimations([typingAnimation[0],standingAnimation[0],fallingAnimation[0],ListeningMUsic[0]], group)
 
   useFrame((state) => {
     if (headFollow) {
