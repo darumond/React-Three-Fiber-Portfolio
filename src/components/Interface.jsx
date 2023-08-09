@@ -8,7 +8,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { motion } from "framer-motion";
 import PoppinsBold from "../Fonts/Poppins/Poppins-Bold.ttf";
-import { GitHub, Linkedin } from "react-feather"
+import { GitHub, Linkedin, Mail } from "react-feather"
 import IconButton from "./IconButton"
 const Section = (props) => {
     const { children, mobileTop } = props;
@@ -489,6 +489,12 @@ const ContactSection = () => {
                                 color="bg-blue"
                             >
                                 <Linkedin size={20} />
+                            </IconButton>
+                            <IconButton
+                                text="Mail"
+                                color="bg-lightblue"
+                            >
+                                <Mail size={20} />
                             </IconButton>
                         </div>
                     </form>

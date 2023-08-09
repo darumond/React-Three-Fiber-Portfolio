@@ -23,7 +23,8 @@ export default {
       'pink': '#9f8bc3',
       'bermuda': '#78dcca',
       'prettywhite': '#fef2f4',
-      'blue': '#0066c8'
+      'blue': '#0066c8',
+      'lightblue': '#3baaea',
     },
   },
   plugins: [],
