@@ -10,11 +10,12 @@ import { motion } from "framer-motion";
 import PoppinsBold from "../Fonts/Poppins/Poppins-Bold.ttf";
 
 const Section = (props) => {
-    const { children } = props;
+    const { children,mobileTop } = props;
 
     return <motion.section className={`
     h-screen w-screen p-8 mx-auto
-    flex flex-col items-start justify-center
+    flex flex-col items-start
+    ${mobileTop ? "justify-start md:justify-center" : "justify-center"}
     `}
         initial={{
             opacity: 0,
@@ -44,7 +45,7 @@ export const Interface = () => {
 
 const AboutSection = () => {
     return (
-        <Section>
+        <Section mobileTop>
             <h1 className='text-sm md:text-xl font-poppins font-bold text-pink '>
                 Hello, my name is
             </h1>
@@ -438,7 +439,7 @@ const ContactSection = () => {
     return (
         <Section>
             <h2 className="text-5xl font-bold">Contact me</h2>
-            <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full">
+            <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full bg-opacity-40">
                 <form>
                     <label className="font-medium text-gray-900 block mb-1">
                         Name
