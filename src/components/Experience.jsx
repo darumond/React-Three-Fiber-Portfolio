@@ -15,10 +15,13 @@ export const Experience = (props) => {
   const [characterAnimation, setCharacterAnimation] = useState("Luc_Typing");
   const { viewport } = useThree();
   const data = useScroll();
-
+  const isMobile = window.innerWidth < 768;
+  const responsiveRatio = viewport.width / 12;
+  const officeScaleRatio = Math.max(0.5, Math.min(0.9 * responsiveRatio, 0.9));
   const cameraPositionX = useMotionValue();
   const cameraLookAtX = useMotionValue();
   const characterContainerAboutRef = useRef();
+  const characterGroup = useRef();
   useEffect(() => {
     if (section !== 0) {
       return;
@@ -59,6 +62,11 @@ export const Experience = (props) => {
     if (curSection !== section) {
       setSection(curSection);
     }
+    if (section === 0) {
+      characterContainerAboutRef.current.getWorldPosition(
+        characterGroup.current.position
+      );
+    }
     state.camera.position.x = cameraPositionX.get();
     state.camera.lookAt(cameraLookAtX.get(), 0, 0);
 
@@ -67,16 +75,16 @@ export const Experience = (props) => {
   return (
     <>
       <Background />
-      <motion.group position={[3.30365746699, 0.225, 2.395423702085502]} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
+      <motion.group ref={characterGroup} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
         animate={"" + section}
         transition={{
           duration: 0.7,
         }}
         variants={{
           0: {
-            scaleX: 0.9,
-            scaleY: 0.9,
-            scaleZ: 0.9,
+            scaleX: officeScaleRatio,
+            scaleY: officeScaleRatio,
+            scaleZ: officeScaleRatio,
           },
           1: {
             y: -viewport.height + 1.5,
@@ -99,11 +107,11 @@ export const Experience = (props) => {
         <Avatar animation={characterAnimation} />
       </motion.group>
       <ambientLight intensity={1} />
-      <motion.group position={[2.89, 2, 3]}
-        scale={[0.9, 0.9, 0.9]}
+      <motion.group position={[isMobile ? 0 : 2.89 * officeScaleRatio, isMobile ? -viewport.height/6 : 2, 3]}
+        scale={[officeScaleRatio,officeScaleRatio, officeScaleRatio]}
         rotation-y={-Math.PI / 4}
         animate={{
-          y: section === 0 ? 0 : -1,
+          y: isMobile? -viewport.height/6 : 0,
         }}>
 
         <Office section={section} />
