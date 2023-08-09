@@ -13,7 +13,7 @@ export const projects = [
     url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
     image: "projects/main.png",
     description: "My portfolio website made with ReactJS and ThreeJS",
-    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" ,"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg"],
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg"],
 
     video: "textures/vscode.mp4"
   },
@@ -22,7 +22,7 @@ export const projects = [
     url: "https://github.com/darumond/SpiderIDE",
     image: "projects/main.png",
     description: "A minimalist IDE for student to create and send request easily",
-    icon: [ "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg"],
     video: "projects/SpiderIDE2.mp4"
   },
 
@@ -44,7 +44,7 @@ export const projects = [
 const Project = (props) => {
   const { project, highlighted, isCurrentProject } = props;
   const [isHovered, setIsHovered] = useState(false);
-
+  const isMobile = window.innerWidth < 768;
   const background = useRef();
   const bgOpacity = useMotionValue(0.4);
   const videoTexture = useVideoTexture(project.video)
@@ -58,9 +58,9 @@ const Project = (props) => {
     background.current.material.opacity = bgOpacity.get();
   });
   const planeGeometryArgs = isCurrentProject ? [9.2, 7.4, 0.99] : [4.1, 3.8, 0.99];
-  const projectTitlePos = isCurrentProject ? [-4, -1.7, 1] : [-1, -1, 1];
-  const iconPos = isCurrentProject ? [-0.2, -2, 1] : [0.5, -1.2, 1];
-  const descriptionPos = isCurrentProject ? [-4, -2.7, 1] : [-1, -1.7, 1];
+  const projectTitlePos = isCurrentProject ? [-4, -1.3, 1] : [-1, -1, 1];
+  const iconPos = isCurrentProject ? [-3.78, -2.15, 1] : [-0.9, -1.5, 1];
+  const descriptionPos = isCurrentProject ? [-4, -2.5, 1] : [-1, -1.7, 1];
   const maxWidthDescription = isCurrentProject ? 6 : 2.5;
   const videoPos = isCurrentProject ? [8.61, 4.5] : [3, 2];
   const meshVideoPos = isCurrentProject ? [0.01, 0.99, 0.696] : [0.01, 0.5, 0.496];
@@ -69,7 +69,15 @@ const Project = (props) => {
   const scaleIcon = isCurrentProject ? [0.40, 0.40, 0.40] : [0.20, 0.20, 0.20];
   const opacity = isCurrentProject ? 0.6 : 0.4;
   const imageSize = isCurrentProject ? [8.75, 4.5, 0] : [3.5, 1.9, 1.5];
-  const imagePos = isCurrentProject ? [0,1,0.5] : [0.05,0.5,0.5];
+  const imagePos = isCurrentProject ? [0, 1, 0.5] : [0.05, 0.5, 0.5];
+
+  const responsivePlaneGeometryArgs = isMobile ? [4.1, 6.8, 0.99] : planeGeometryArgs;
+  const responsiveImageSize = isMobile ? [3.5, 1.9, 1.5] : imageSize;
+  const responsiveImagePos = isMobile ? [0, 2, 0.5] : imagePos;
+  const responsiveProjectTitlePos = isMobile ? [-1.7, 0.7, 1] : projectTitlePos;
+  const responsiveIconPos = isMobile ? [-1.5, -0.3, 1] : iconPos;
+  const responsiveDescriptionPos = isMobile ? [-1.7, -1, 1] : descriptionPos;
+  const responsiveMaxWidthDescription = isMobile ? 3 : maxWidthDescription;
   return (
     <group
       {...props}
@@ -83,7 +91,7 @@ const Project = (props) => {
         ref={background}
       >
         <RoundedBox
-          args={planeGeometryArgs} // Width, height, depth. Default is [1, 1, 1]
+          args={responsivePlaneGeometryArgs} // Width, height, depth. Default is [1, 1, 1]
           radius={0.5} // Radius of the rounded corners. Default is 0.05
           smoothness={4} // The number of curve segments. Default is 4
           creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle// All THREE.Mesh props are valid
@@ -95,11 +103,11 @@ const Project = (props) => {
       {(
         <>
           <Image
-            scale={imageSize}
+            scale={responsiveImageSize}
             url={project.image}
             toneMapped={false}
-            position={imagePos}
-            
+            position={responsiveImagePos}
+
 
           />
 
@@ -109,24 +117,24 @@ const Project = (props) => {
             anchorX={"left"}
             anchorY={"top"}
             fontSize={fontSizeTitle}
-            position={projectTitlePos}
+            position={responsiveProjectTitlePos}
           >
             {project.title}
           </Text>
 
           <Text
             font="../src/Fonts/Poppins/Poppins-Regular.ttf"
-            maxWidth={maxWidthDescription}
+            maxWidth={responsiveMaxWidthDescription}
             anchorX="left"
             anchorY="top"
             fontSize={fontSizeDescription}
-            position={descriptionPos}
+            position={responsiveDescriptionPos}
           >
             {project.description}
 
           </Text>
           {project.icon && (
-            <group position={iconPos} scale={scaleIcon}>
+            <group position={responsiveIconPos} scale={scaleIcon}>
               {project.icon.map((iconUrl, idx) => (
                 <Image key={`icon_${idx}`} url={iconUrl} position={[idx * 1.2, 0, 0]} transparent={true} />
               ))}
@@ -152,7 +160,8 @@ export const currentProjectAtom = atom(Math.floor(projects.length / 2));
 export const Projects = () => {
   const { viewport } = useThree();
   const [currentProject] = useAtom(currentProjectAtom);
-  const gapSpace = 3;
+  const isMobile = window.innerWidth < 768;
+  const gapSpace = isMobile? 1.2 : 3;
   const init = {
     opacity: 0,
     y: 25,
