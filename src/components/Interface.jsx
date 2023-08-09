@@ -8,9 +8,10 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { motion } from "framer-motion";
 import PoppinsBold from "../Fonts/Poppins/Poppins-Bold.ttf";
-
+import { GitHub, Linkedin } from "react-feather"
+import IconButton from "./IconButton"
 const Section = (props) => {
-    const { children,mobileTop } = props;
+    const { children, mobileTop } = props;
 
     return <motion.section className={`
     h-screen w-screen p-8 mx-auto
@@ -87,8 +88,8 @@ const AboutSection = () => {
                     }
                 }>
 
-                I'm currently working 
-                at <span className='text-pink'>Dassault Systèmes </span> <br/> and a student at <span className='text-pink'> EPITA </span>.
+                I'm currently working
+                at <span className='text-pink'>Dassault Systèmes </span> <br /> and a student at <span className='text-pink'> EPITA </span>.
             </motion.p>
             <motion.div className='flex flex-row space-x-4 mt-4'
                 initial={{
@@ -438,45 +439,60 @@ const ProjectsSection = () => {
 const ContactSection = () => {
     return (
         <Section>
-            <h2 className="text-5xl font-bold">Contact me</h2>
-            <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full bg-opacity-40">
-                <form>
-                    <label className="font-medium text-gray-900 block mb-1">
-                        Name
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-                    />
-                    <label
+            <div className='h-full w-full text-center items-center flex flex-col mt-20'>
 
-                        className="font-medium text-gray-900 block mb-1 mt-8"
-                    >
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-                    />
-                    <label
+                <h2 className="text-5xl font-bold font-poppins ml">Contact me</h2>
+                <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full bg-opacity-40 flex flex-col">
+                    <form className='flex flex-col items-center'>
+                        <label className="font-bold font-poppins text-gray-900 block mb-1">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            className="block w-full font-poppins rounded-md border-0 text-lightblack shadow-sm   placeholder:text-lightblack p-3 bg-prettywhite"
+                        />
+                        <label
 
-                        className="font-medium text-gray-900 block mb-1 mt-8"
-                    >
-                        Message
-                    </label>
-                    <textarea
-                        name="message"
-                        id="message"
-                        className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-                    />
-                    <button className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 ">
-                        Submit
-                    </button>
-                </form>
+                            className="font-bold font-poppins text-gray-900 block mb-1 mt-8"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full font-poppins rounded-md border-0 text-lightblack shadow-sm   placeholder:text-lightblack p-3 bg-prettywhite"
+                        />
+                        <label
+
+                            className="font-bold font-poppins text-gray-900 block mb-1 mt-8"
+                        >
+                            Message
+                        </label>
+                        <textarea
+                            name="message"
+                            id="message"
+                            className="h-32 block w-full font-poppins rounded-md border-0 text-lightblack shadow-sm   placeholder:text-lightblack p-3 bg-prettywhite"
+                        />
+                        <button className="w-1/2 bg-purple-light text-prettywhite font-poppins py-4 px-8 rounded-lg font-bold text-lg mt-8 ">
+                            Submit
+                        </button>
+
+                        <div className="flex flex-row mt-8 gap-4">
+                            <IconButton text="Darumond">
+                                <GitHub size={20} />
+                            </IconButton>
+                            <IconButton
+                                text="/lucngy"
+                                color="bg-blue"
+                            >
+                                <Linkedin size={20} />
+                            </IconButton>
+                        </div>
+                    </form>
+                </div>
             </div>
         </Section>
     );

@@ -22,6 +22,8 @@ export default {
       'silver': '#ecebff',
       'pink': '#9f8bc3',
       'bermuda': '#78dcca',
+      'prettywhite': '#fef2f4',
+      'blue': '#0066c8'
     },
   },
   plugins: [],

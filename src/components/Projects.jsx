@@ -76,7 +76,7 @@ const Project = (props) => {
   const responsiveImagePos = isMobile ? [0, 2, 0.5] : imagePos;
   const responsiveProjectTitlePos = isMobile ? [-1.7, 0.7, 1] : projectTitlePos;
   const responsiveIconPos = isMobile ? [-1.5, -0.3, 1] : iconPos;
-  const responsiveDescriptionPos = isMobile ? [-1.7, -1, 1] : descriptionPos;
+  const responsiveDescriptionPos = isMobile ? [-1.7, -0.85, 1] : descriptionPos;
   const responsiveMaxWidthDescription = isMobile ? 3 : maxWidthDescription;
   return (
     <group
