@@ -45,13 +45,13 @@ export const Interface = () => {
 const AboutSection = () => {
     return (
         <Section>
-            <h1 className='text-xl font-poppins font-bold text-pink '>
+            <h1 className='text-sm md:text-xl font-poppins font-bold text-pink '>
                 Hello, my name is
             </h1>
-            <h1 className="text-5xl font-extrabold leading-snug font-poppins text-purple-dark">
+            <h1 className="text-2xl md:text-5xl font-extrabold leading-snug font-poppins text-purple-dark">
                 <span >Luc NGUYEN.</span>
             </h1>
-            <motion.p className="text-5xl font-extrabold font-poppins text-purple-light mt-4"
+            <motion.p className="text-2xl md:text-5xl font-extrabold font-poppins text-purple-light mt-4"
                 initial={{
                     opacity: 0,
                     y: 25,
@@ -70,7 +70,7 @@ const AboutSection = () => {
                 I'm a VR Software Engineer.
             </motion.p>
 
-            <motion.p className="text-xl font-extrabold font-poppins text-purple-light mt-4"
+            <motion.p className="text-sm md:text-xl font-extrabold font-poppins text-purple-light mt-4"
                 initial={{
                     opacity: 0,
                     y: 25,
@@ -413,7 +413,7 @@ const ProjectsSection = () => {
 
     return (
         <Section>
-            <div className="text-6xl h-full w-full text-center  mt-10 font-poppins font-extrabold">
+            <div className="text-3xl md:text-6xl h-full w-full text-center  mt-10 font-poppins font-extrabold">
                 <button
                     className="hover:text-indigo-600 transition-colors"
                     onClick={previousProject}
