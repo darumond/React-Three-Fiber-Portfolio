@@ -34,25 +34,55 @@ const Section = (props) => {
     >{children}</motion.section>;
 };
 
-export const Interface = () => {
+export const Interface = (props) => {
+    const { setSection } = props;
     return (
         <div className="flex flex-col items-center w-screen">
-            <AboutSection />
+            <AboutSection setSection={setSection}/>
             <SkillsSection />
             <ProjectsSection />
             <ContactSection />
         </div>);
 }
 
-const AboutSection = () => {
+const AboutSection = (props) => {
+    const { setSection } = props;
     return (
         <Section mobileTop>
-            <h1 className='text-sm md:text-xl font-poppins font-bold text-pink '>
+            <motion.h1 className='text-sm md:text-xl font-poppins font-bold text-pink '
+             initial={{
+                opacity: 0,
+                y: 25,
+            }}
+            whileInView={
+                {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                        duration: 1,
+                        delay: 1,
+                    },
+                }
+            }>
                 Hello, my name is
-            </h1>
-            <h1 className="text-2xl md:text-5xl font-extrabold leading-snug font-poppins text-purple-dark">
+            </motion.h1>
+            <motion.h1 className="text-2xl md:text-5xl font-extrabold leading-snug font-poppins text-purple-dark mt-2"
+             initial={{
+                opacity: 0,
+                y: 25,
+            }}
+            whileInView={
+                {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                        duration: 1,
+                        delay: 1.250,
+                    },
+                }
+            }>
                 <span >Luc NGUYEN.</span>
-            </h1>
+            </motion.h1>
             <motion.p className="text-2xl md:text-5xl font-extrabold font-poppins text-purple-light mt-4"
                 initial={{
                     opacity: 0,
@@ -64,7 +94,7 @@ const AboutSection = () => {
                         y: 0,
                         transition: {
                             duration: 1,
-                            delay: 1,
+                            delay: 1.500,
                         },
                     }
                 }>
@@ -83,7 +113,7 @@ const AboutSection = () => {
                         y: 0,
                         transition: {
                             duration: 1,
-                            delay: 1,
+                            delay: 1.750,
                         },
                     }
                 }>
@@ -102,18 +132,19 @@ const AboutSection = () => {
                         y: 0,
                         transition: {
                             duration: 1,
-                            delay: 1.5,
+                            delay: 2,
                         },
                     }
                 }>
-                {/* <Button size="large" variant="contained">
-                    <Typography>
-                        Resume
-                    </Typography></Button>
-                <Button size="large" variant="contained">
-                    <Typography>
-                        Contact
-                    </Typography></Button> */}
+
+                <motion.button
+                    onClick={() => setSection(3)}
+                    className={`bg-purple-light text-white  font-poppins py-2 px-4 md:py-4 md:px-8 
+      rounded-lg font-bold text-lg mt-2 md:mt-3`}
+
+                >
+                    Contact me
+                </motion.button>
 
 
             </motion.div>
@@ -417,7 +448,7 @@ const ProjectsSection = () => {
         <Section>
             <div className="text-3xl md:text-6xl h-full w-full text-center  mt-10 font-poppins font-extrabold">
                 <button
-                    className="hover:text-indigo-600 transition-colors"
+                    className="hover:text-purple-light transition-colors"
                     onClick={previousProject}
 
                 >
@@ -426,7 +457,7 @@ const ProjectsSection = () => {
                 Projects
 
                 <button
-                    className="hover:text-indigo-600 transition-colors"
+                    className="hover:text-purple-light transition-colors"
                     onClick={nextProject}
                 >
                     <ArrowCircleRightOutlinedIcon style={iconStyle} />
