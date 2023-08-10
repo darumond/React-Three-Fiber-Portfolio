@@ -25,6 +25,7 @@ export default {
       'prettywhite': '#fef2f4',
       'blue': '#0066c8',
       'lightblue': '#3baaea',
+      'background': "#b9bcff"
     },
   },
   plugins: [],

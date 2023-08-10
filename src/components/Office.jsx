@@ -193,3 +193,4 @@ export function Office(props) {
 }
 
 useGLTF.preload('models/myroom.gltf')
+useTexture.preload('textures/baked.jpg')
