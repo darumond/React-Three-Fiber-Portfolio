@@ -17,7 +17,7 @@ export const LoadingScreen = (props) => {
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full z-50 transition-opacity duration-1000 pointer-events-none
-  flex items-center justify-center bg-background
+  flex items-center justify-center bg-loadingscreen
   ${started ? "opacity-0" : "opacity-100"}`}
     >
       <div className="text-4xl md:text-8xl font-bold text-purple-light relative">

@@ -112,6 +112,9 @@ export const Experience = (props) => {
         rotation-y={-Math.PI / 4}
         animate={{
           y: isMobile? -viewport.height/6 : 0,
+        }}
+        transition={{
+          duration: 1.5,
         }}>
 
         <Office section={section} />
