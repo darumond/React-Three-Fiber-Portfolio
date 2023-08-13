@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 const CURSOR_SPEED = 0.08;
 
-let mouseX = 0;
-let mouseY = 0;
+let mouseX = -10;
+let mouseY = -10;
 let outlineX = 0;
 let outlineY = 0;
 
