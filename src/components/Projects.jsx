@@ -145,7 +145,7 @@ const Project = (props) => {
 
         </>
       )}
-      {isHovered && (
+      {isHovered && !isMobile && (
         <mesh position={meshVideoPos}>
           <planeBufferGeometry args={videoPos} />
           <meshStandardMaterial map={videoTexture} transparent opacity={1} toneMapped={false} />
