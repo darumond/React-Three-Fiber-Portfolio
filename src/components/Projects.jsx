@@ -11,11 +11,11 @@ export const projects = [
   {
     title: "Portfolio",
     url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
-    image: "projects/main.png",
+    image: "projects/portfoliopic.png",
     description: "My portfolio website made with ReactJS and ThreeJS",
     icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg"],
 
-    video: "textures/vscode.mp4"
+    video: "projects/portfolio.mp4"
   },
   {
     title: "Spider IDE",
@@ -28,11 +28,20 @@ export const projects = [
 
   {
     title: "Chess Engine",
-    url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
-    image: "projects/ChessEngine.png",
+    url: "https://github.com/darumond/chess-move",
+    image: "projects/chesspic.png",
     description: "Chess Engine that can calculate every possible move with any depth",
-    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"],
-    video: "projects/SpiderIDE2.mp4"
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"],
+    video: "projects/chess.mp4"
+  },
+
+  {
+    title: "My Notes",
+    url: "https://github.com/darumond/MyNotes",
+    image: "projects/mynotespic.png",
+    description: "Simple note app made with Vue 3 and Firebase",
+    icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg","https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"],
+    video: "projects/mynotes.mp4"
   },
 
 
