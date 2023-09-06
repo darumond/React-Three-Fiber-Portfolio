@@ -10,7 +10,7 @@ export const projects = [
 
   {
     title: "Portfolio",
-    url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
+    url: "https://github.com/darumond/React-Three-Fiber-Portfolio",
     image: "projects/portfoliopic.png",
     description: "My portfolio website made with ReactJS and ThreeJS",
     icon: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg"],
