@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import PoppinsBold from "../Fonts/Poppins/Poppins-Bold.ttf";
 import { GitHub, Linkedin, Mail } from "react-feather";
 import IconButton from "./IconButton";
+
 const Section = (props) => {
   const { children, mobileTop } = props;
 
@@ -203,36 +204,45 @@ const images = [
 const images2 = [
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-    spaces: 10,
+    spaces: 4,
   },
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-    spaces: 9,
+    spaces: 4,
   },
 
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-    spaces: 14,
+    spaces: 4,
   },
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-    spaces: 8,
+    spaces: 4,
   },
 ];
 const images3 = [
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    spaces: 3,
+    spaces: 4,
   },
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
-    spaces: 3,
+    spaces: 4,
   },
   {
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg",
+    spaces: 4,
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+    spaces: 4,
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
     spaces: 0,
   },
 ];
+
 const SkillsSection = () => {
   return (
     <Section>
@@ -270,15 +280,6 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="text-sm md:text-xl font-bold mt-2 ml-2 md:ml-5 flex flex-row">
-          <p>C++</p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <p className="ml-2 md:ml-6">C</p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <p className="ml-1 md:ml-5">Swift</p>
-          <p className="md: ml-6">Python</p>
-        </div>
-
         <div className="h-8 w-8 md:h-16 md:w-16 ml-1 mt-8 flex">
           {images2.map((image, index) => (
             <React.Fragment key={index}>
@@ -301,13 +302,6 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="text-sm md:text-xl font-bold mt-2  flex flex-row">
-          <p className="">HTML5</p>
-          <p className="ml-6 md:ml-11">CSS3</p>
-          <p className="ml-4 md:ml-6">Typescript</p>
-          <p className="ml-5 md:ml-6">Javascript</p>
-        </div>
-
         <motion.h2
           className="text-2xl md:text-5xl font-bold mt-10"
           initial={init}
@@ -320,7 +314,7 @@ const SkillsSection = () => {
             },
           }}
         >
-          Frameworks/Libraries
+          Tools/Frameworks
         </motion.h2>
         <div className="h-8 w-8 md:h-16 md:w-16 ml-1 mt-8 flex flex-row items-center">
           {images3.map((image, index) => (
@@ -344,11 +338,7 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="text-sm md:text-xl font-bold mt-2  flex flex-row">
-          <p className="md:ml-1">React</p>
-          <p className="ml-4 md:ml-9">Vue</p>
-          <p className="ml-4 md:ml-5">ThreeJS</p>
-        </div>
+        {/* Language proficiency section remains unchanged */}
 
         <motion.h2
           className="text-2xl md:text-5xl font-bold mt-10"
@@ -447,6 +437,9 @@ const ProjectsSection = () => {
     </Section>
   );
 };
+const handleRedirect = (url) => {
+  window.open(url, "_blank");
+};
 
 const ContactSection = () => {
   return (
@@ -485,18 +478,33 @@ const ContactSection = () => {
               Submit
             </button>
 
-            <div className="flex flex-row mt-8 gap-4">
-              <IconButton text="Darumond">
+           
+          </form>
+          <div className="flex flex-row mt-8 gap-4 justify-center">
+              <IconButton
+                text="Darumond"
+                onClick={() => handleRedirect("https://github.com/Darumond")}
+              >
                 <GitHub size={20} />
               </IconButton>
-              <IconButton text="/lucngy" color="bg-blue">
+              <IconButton
+                text="/lucngy"
+                color="bg-blue"
+                onClick={() => handleRedirect("https://linkedin.com/in/lucngy")}
+              >
                 <Linkedin size={20} />
               </IconButton>
-              <IconButton text="Mail" color="bg-lightblue">
+
+              <IconButton
+                text="Mail"
+                color="bg-lightblue"
+                onClick={() =>
+                  (window.location.href = "luc.programmer@gmail.com")
+                }
+              >
                 <Mail size={20} />
               </IconButton>
             </div>
-          </form>
         </div>
       </div>
     </Section>
