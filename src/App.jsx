@@ -10,7 +10,6 @@ import { Leva } from "leva";
 import { framerMotionConfig } from "./config";
 import { Cursor } from "./components/Cursor";
 import { LoadingScreen } from "./components/LoadingScreen";
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   const [section, setSection] = useState(0);
@@ -47,8 +46,6 @@ function App() {
         <Cursor />
       </MotionConfig>
       <Leva hidden />
-      <SpeedInsights />
-
     </>
 
   );
