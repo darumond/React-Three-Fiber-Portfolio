@@ -219,6 +219,10 @@ const images2 = [
     src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
     spaces: 4,
   },
+  {
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    spaces: 4,
+  },
 ];
 const images3 = [
   {
