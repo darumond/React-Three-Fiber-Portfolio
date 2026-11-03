@@ -123,8 +123,7 @@ const AboutSection = (props) => {
         }}
       >
         I am currently working at{" "}
-        <span className="text-pink">Google </span> <br /> and a
-        student at <span className="text-pink"> EPITA </span>.
+        <span className="text-pink">Google</span>.
       </motion.p>
       <motion.div
         className="flex flex-row space-x-4 mt-4"
