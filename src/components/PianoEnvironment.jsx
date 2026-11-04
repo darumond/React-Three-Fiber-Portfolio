@@ -2,13 +2,14 @@ import { useEffect, useMemo, useRef } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { KEY_WIDTH, WHITE_KEY_COUNT } from "./pianoMotion";
+import { KEY_WIDTH, WHITE_KEY_COUNT, BLACK_KEY_AFTER } from "./pianoMotion";
 
 const GOLD = "#b2944c";
-const GREEN = "#526f3d";
+const EBONY = "#141518";
 const IVORY = new THREE.Color("#e9dbb3");
 const PRESSED = new THREE.Color("#f6d78b");
-const BLACK_KEY_AFTER = [0, 1, 3, 4, 5];
+const blackColor = new THREE.Color("#161619");
+const blackPressedColor = new THREE.Color("#4c4030");
 
 function makeTexture(pages = false) {
   const canvas = document.createElement("canvas");
@@ -28,7 +29,7 @@ function makeTexture(pages = false) {
   return texture;
 }
 
-function Block({ size, color = GREEN, radius = 0.03, map, metalness = 0, roughness = 0.55, ...props }) {
+function Block({ size, color = EBONY, radius = 0.03, map, metalness = 0, roughness = 0.55, ...props }) {
   return (
     <RoundedBox args={size} radius={radius} smoothness={2} castShadow receiveShadow {...props}>
       <meshStandardMaterial color={color} map={map} metalness={metalness} roughness={roughness} />
@@ -107,6 +108,21 @@ function WhiteKey({ index, pressed }) {
   );
 }
 
+function BlackKey({ index, pressed }) {
+  const key = useRef();
+  useFrame((_, delta) => {
+    const amount = pressed.current === WHITE_KEY_COUNT + index ? 1 : 0;
+    key.current.position.y = THREE.MathUtils.damp(key.current.position.y, -amount * 0.045, 18, delta);
+    key.current.children[0].material.color.lerp(amount ? blackPressedColor : blackColor, 1 - Math.exp(-12 * delta));
+  });
+  return (
+    <group ref={key}>
+      <Block size={[0.29, 0.31, 2.25]} position={[(index - (WHITE_KEY_COUNT - 2) / 2) * KEY_WIDTH, 0.24, -0.58]}
+        color="#161619" roughness={0.25} radius={0.025} />
+    </group>
+  );
+}
+
 export function PianoEnvironment({ pressed }) {
   const grain = useMemo(() => makeTexture(), []);
   const pages = useMemo(() => makeTexture(true), []);
@@ -114,20 +130,19 @@ export function PianoEnvironment({ pressed }) {
   return (
     <group>
       {/* The keyboard extends beyond the frame: this is a place to explore. */}
-      <Block size={[15.1, 0.65, 5]} position={[0, -0.43, 0.45]} color="#586a3d" map={grain} radius={0.1} />
-      <Block size={[15.4, 0.18, 0.65]} position={[0, -0.12, 2.55]} color="#667b43" map={grain} radius={0.08} />
+      <Block size={[15.1, 0.65, 5]} position={[0, -0.43, 0.45]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.1} />
+      <Block size={[15.4, 0.18, 0.65]} position={[0, -0.12, 2.55]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.08} />
       <Block size={[15.4, 0.055, 0.06]} position={[0, -0.1, 2.89]} color={GOLD} metalness={0.5} radius={0.01} />
-      <Block size={[15.5, 12, 0.7]} position={[0, -6.5, 2.5]} color="#426332" map={grain} radius={0.08} />
-      <Block size={[15.6, 0.12, 0.95]} position={[0, -0.77, 2.7]} color="#91a25a" radius={0.04} />
-      <Block size={[15.5, 1.6, 0.5]} position={[0, 0.8, -1.75]} color="#536b39" map={grain} radius={0.04} />
+      <Block size={[15.5, 12, 0.7]} position={[0, -6.5, 2.5]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.08} />
+      <Block size={[15.6, 0.12, 0.95]} position={[0, -0.77, 2.7]} color="#151619" metalness={0.18} roughness={0.28} radius={0.04} />
+      <Block size={[15.5, 1.6, 0.5]} position={[0, 0.8, -1.75]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.04} />
       <Block size={[15.55, 0.065, 0.065]} position={[0, 0.2, -1.45]} color={GOLD} metalness={0.45} radius={0.01} />
-      <Block size={[15.6, 0.13, 2.7]} position={[0, 1.62, -2.75]} color="#79613e" map={grain} radius={0.045} />
+      <Block size={[15.6, 0.13, 2.7]} position={[0, 1.62, -2.75]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.045} />
       <Block size={[15.65, 0.065, 0.09]} position={[0, 1.7, -1.43]} color="#c6ab69" metalness={0.4} radius={0.015} />
-      <Block size={[15.3, 0.55, 0.16]} position={[0, 1.98, -3.6]} color="#3f4d2b" map={grain} radius={0.03} />
+      <Block size={[15.3, 0.55, 0.16]} position={[0, 1.98, -3.6]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.03} />
       {Array.from({ length: WHITE_KEY_COUNT }, (_, index) => <WhiteKey key={index} index={index} pressed={pressed} />)}
       {Array.from({ length: WHITE_KEY_COUNT - 1 }, (_, index) => BLACK_KEY_AFTER.includes(index % 7) && (
-        <Block key={index} size={[0.29, 0.31, 2.25]} position={[(index - (WHITE_KEY_COUNT - 2) / 2) * KEY_WIDTH, 0.24, -0.58]}
-          color="#24241b" roughness={0.3} radius={0.025} />
+        <BlackKey key={index} index={index} pressed={pressed} />
       ))}
       {[-7.2, 7.2].map((x) => <Block key={x} size={[0.35, 0.45, 4.1]} position={[x, 0, 0.34]} map={grain} radius={0.08} />)}
 

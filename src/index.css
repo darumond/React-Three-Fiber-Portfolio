@@ -46,12 +46,9 @@ body {
 .piano-heading h2 { margin: 0; font-size: clamp(22px, 2.3vw, 32px); line-height: 1.2; font-weight: 400; letter-spacing: -.04em; }
 .piano-description { margin: 8px 0 0; font-size: 11px; color: #e5ddc6; }
 .piano-controls { position: absolute; bottom: max(25px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 32px); pointer-events: auto; }
-.piano-controls-main { display: flex; align-items: center; gap: 20px; padding: 9px 12px; background: rgba(28, 36, 19, .78); border: 1px solid rgba(238, 214, 163, .35); border-radius: 15px; box-shadow: 0 8px 30px #1b241c30; backdrop-filter: blur(12px); }
+.piano-controls-main { display: flex; align-items: center; gap: 13px; padding: 10px 13px; background: rgba(17, 18, 22, .88); border: 1px solid rgba(238, 214, 163, .35); border-radius: 15px; box-shadow: 0 8px 30px #1b241c30; backdrop-filter: blur(12px); }
 .piano-controls-main p { margin: 0; font-size: 11px; text-align: center; line-height: 1.6; }
 .piano-controls-main p span { display: block; font-size: 9px; color: #d1c6a6; }
-.piano-move { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #dfc58c66; border-radius: 10px; background: #f1d39912; color: #fff3d6; touch-action: none; user-select: none; -webkit-user-select: none; transition: background 150ms, transform 150ms; }
-.piano-move:hover { background: #f1d39926; }
-.piano-move:active { background: #9a8d4b; transform: translateY(2px); }
 .piano-controls button:focus-visible { outline: 2px solid #ebcfa0; outline-offset: 4px; }
 .piano-controls button:disabled { opacity: .4; cursor: default; }
 .piano-controls-extras { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 7px; }
@@ -70,5 +67,12 @@ body {
   .piano-controls { bottom: 8px; }
   .piano-controls-extras { margin-top: 0; }
   .piano-controls-main { padding: 5px 9px; }
-  .piano-move { width: 36px; height: 36px; }
 }
+
+.piano-joystick { position: relative; display: grid; place-items: center; flex: 0 0 auto; width: 82px; height: 82px; border-radius: 50%; border: 1px solid #dfc58c66; color: #f8e9c8; background: radial-gradient(circle, #ffffff08 0 25%, #ffffff02 26% 65%, #ffffff08 66%); touch-action: none; user-select: none; -webkit-user-select: none; }
+.piano-joystick-cross { position: absolute; inset: 12px; border-radius: 50%; border: 1px dashed #e8d7ae40; pointer-events: none; }
+.piano-joystick-knob { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid #e4cd9960; background: #b5a17a55; box-shadow: 0 3px 8px #0005; pointer-events: none; }
+.piano-jump { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 0 0 auto; width: 53px; height: 53px; gap: 2px; border-radius: 50%; border: 1px solid #dfc58c77; color: #fff3d6; background: #dfc58c18; touch-action: manipulation; font-size: 9px; }
+.piano-jump:active { background: #dfc58c55; transform: scale(.95); }
+@media (max-width: 420px) { .piano-controls-main { gap: 10px; padding: 9px; } .piano-controls-main p { font-size: 10px; } .piano-controls-main p span { font-size: 8px; } }
+@media (max-height: 540px) { .piano-joystick { width: 60px; height: 60px; } .piano-jump { width: 44px; height: 44px; } }

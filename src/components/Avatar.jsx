@@ -12,7 +12,7 @@ import * as THREE from 'three';
 
 export function Avatar(props) {
 
-  const {animation, walking = false, ...groupProps} = props;
+  const {animation, walking = false, locomotion, ...groupProps} = props;
   const { headFollow,cursorFollow, wireframe} = useControls({
     headFollow: false,
     cursorFollow: false,
@@ -47,9 +47,10 @@ export function Avatar(props) {
   }, []);
 
   useFrame((state, delta) => {
-    gait.current = THREE.MathUtils.damp(gait.current, walking ? 1 : 0, 10, delta);
+    const speed = locomotion?.current.speed ?? (walking ? 1 : 0);
+    gait.current = THREE.MathUtils.damp(gait.current, speed, 10, delta);
     if (gait.current > 0.001) {
-      const stride = Math.sin(state.clock.elapsedTime * 12) * gait.current;
+      const stride = Math.sin(locomotion?.current.phase ?? state.clock.elapsedTime * 12) * gait.current;
       nodes.LeftUpLeg.rotation.x += stride * 0.4;
       nodes.RightUpLeg.rotation.x -= stride * 0.4;
       nodes.LeftLeg.rotation.x += Math.max(0, -stride) * 0.3;
