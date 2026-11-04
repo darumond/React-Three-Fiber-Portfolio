@@ -40,6 +40,11 @@ export function Avatar(props) {
   }), [typingAnimation, standingAnimation, fallingAnimation, listeningAnimation, saluteAnimation]);
   const { actions } = useAnimations(clips, group)
   const gait = useRef(0);
+  useEffect(() => {
+    group.current?.traverse((object) => {
+      if (object.isMesh) object.castShadow = true;
+    });
+  }, []);
 
   useFrame((state, delta) => {
     gait.current = THREE.MathUtils.damp(gait.current, walking ? 1 : 0, 10, delta);

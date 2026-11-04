@@ -58,7 +58,7 @@ export function PianoControls() {
     <div className="piano-controls">
       <div className="piano-controls-main">
         {moveButton(-1, "Move left on the piano", ArrowLeft)}
-        <p>Take a little walk<span>Hold ← / → or A / D</span></p>
+        <p>Walk the keys<span>Hold ← / → or A / D</span></p>
         {moveButton(1, "Move right on the piano", ArrowRight)}
       </div>
       <div className="piano-controls-extras">

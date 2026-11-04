@@ -152,9 +152,9 @@ const AboutSection = (props) => {
 const PianoSection = () => (
   <section className="piano-section" aria-labelledby="piano-title">
     <div className="piano-heading">
-      <p className="piano-eyebrow">A little change of scale</p>
-      <h2 id="piano-title">Small steps. <span>Big notes.</span></h2>
-      <p className="piano-description">A tiny me. A grand piano. Take it one key at a time.</p>
+      <p className="piano-eyebrow">02 / The interlude</p>
+      <h2 id="piano-title">Between the notes.</h2>
+      <p className="piano-description">Take a little walk. Find your own rhythm.</p>
     </div>
     <PianoControls />
     <span className="piano-section-number" aria-hidden="true">02 / PLAY</span>
