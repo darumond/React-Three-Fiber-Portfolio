@@ -3,60 +3,46 @@ import { useFrame } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 
-export const ScrollManager = (props) => {
-  const { section, onSectionChange } = props;
-
+export const ScrollManager = ({ section, onSectionChange }) => {
   const data = useScroll();
-  const lastScroll = useRef(0);
   const isAnimating = useRef(false);
-
-  data.fill.classList.add("top-0");
-  data.fill.classList.add("absolute");
+  const currentSection = useRef(section);
+  currentSection.current = section;
 
   useEffect(() => {
-    gsap.to(data.el, {
+    data.fill.classList.add("top-0", "absolute");
+    isAnimating.current = true;
+    const tween = gsap.to(data.el, {
       duration: 1,
       scrollTop: section * data.el.clientHeight,
-      onStart: () => {
-        isAnimating.current = true;
-      },
-      onComplete: () => {
-        isAnimating.current = false;
-      },
+      onStart: () => { isAnimating.current = true; },
+      onComplete: () => { isAnimating.current = false; },
     });
-  }, [section]);
+    return () => { tween.kill(); isAnimating.current = false; };
+  }, [section, data]);
 
-useFrame(() => {
-  if (isAnimating.current) {
-    lastScroll.current = data.scroll.current;
-    return;
-  }
+  useEffect(() => {
+    let height = data.el.clientHeight;
+    const observer = new ResizeObserver(() => {
+      if (height === data.el.clientHeight) return;
+      height = data.el.clientHeight;
+      gsap.killTweensOf(data.el);
+      isAnimating.current = false;
+      data.el.scrollTop = currentSection.current * height;
+    });
+    observer.observe(data.el);
+    return () => observer.disconnect();
+  }, [data]);
 
-  const curSection = Math.floor(data.scroll.current * data.pages);
-  if (data.scroll.current > lastScroll.current && curSection === 0) {
-    onSectionChange(1);
-  }
-  // if (data.scroll.current > lastScroll.current && curSection === 1) {
-  //   onSectionChange(2);
-
-  // }
-  // if (data.scroll.current > lastScroll.current && curSection === 3) {
-  //   onSectionChange(4);
-  // }
-  if (data.scroll.current < lastScroll.current && lastScroll.current <= 1 / (data.pages - 1)) {
-    onSectionChange(0);
-    return;
-  }
-  // if (data.scroll.current < lastScroll.current && lastScroll.current <= 2 / (data.pages - 1)) {
-  //   onSectionChange(1);
-  //   return;
-  // }
-  // if (data.scroll.current < lastScroll.current && lastScroll.current <= 3/ (data.pages - 1)) {
-  //   onSectionChange(2);
-  // }
-  lastScroll.current = data.scroll.current;
-});
-
+  useFrame(() => {
+    // Drei caches its scroll range; keep it in sync when the viewport resizes.
+    const scrollRange = data.el.scrollHeight - data.el.clientHeight;
+    data.scroll.current = scrollRange > 0 ? data.el.scrollTop / scrollRange : 0;
+    if (isAnimating.current) return;
+    const nextSection = Math.max(0, Math.min(data.pages - 1,
+      Math.round(data.el.scrollTop / data.el.clientHeight)));
+    if (nextSection !== section) onSectionChange(nextSection);
+  });
 
   return null;
 };

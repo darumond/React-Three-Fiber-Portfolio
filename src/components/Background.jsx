@@ -13,8 +13,8 @@ export const Background = () => {
   const tl = useRef();
 
   useFrame(() => {
-    tl.current.progress(data.scroll.current);
-    material.current.color = new THREE.Color(color.current.color);
+    tl.current?.progress(data.scroll.current);
+    if (material.current) material.current.color.set(color.current.color);
   });
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export const Background = () => {
     tl.current.to(color.current, {
       color: "#9b96dd",
     });
+    return () => tl.current?.kill();
   }, []);
 
   return (
