@@ -1,14 +1,15 @@
-export const WHITE_KEY_COUNT = 28;
-export const KEY_WIDTH = 0.5;
+export const WHITE_KEY_COUNT = 52;
+export const KEY_WIDTH = 14 / WHITE_KEY_COUNT;
 export const PIANO_WIDTH = WHITE_KEY_COUNT * KEY_WIDTH;
-export const WALK_LIMIT = PIANO_WIDTH / 2 - KEY_WIDTH / 2;
+// Preserve space for the running stride beside the outer key cheeks.
+export const WALK_LIMIT = PIANO_WIDTH / 2 - 0.25;
 export const RUN_SPEED = 2.8;
 // Full-size stride matches the planted-foot travel in the authored sprint.
 export const RUN_STRIDE = 5.6;
 export const MIN_Z = -1.15;
 export const MAX_Z = 1.97;
 export const BLACK_KEY_HEIGHT = 0.3;
-export const BLACK_KEY_AFTER = [0, 1, 3, 4, 5];
+export const BLACK_KEY_AFTER = [0, 2, 3, 5, 6];
 
 export const createPianist = () => ({
   x: 0.25, z: 1.68, y: 6,
@@ -22,7 +23,7 @@ export function blackKeyAtPosition(x, z) {
   const index = Math.round(x / KEY_WIDTH + (WHITE_KEY_COUNT - 2) / 2);
   const center = (index - (WHITE_KEY_COUNT - 2) / 2) * KEY_WIDTH;
   return index >= 0 && index < WHITE_KEY_COUNT - 1 &&
-    BLACK_KEY_AFTER.includes(index % 7) && Math.abs(x - center) <= 0.145 ? index : -1;
+    BLACK_KEY_AFTER.includes(index % 7) && Math.abs(x - center) <= KEY_WIDTH * 0.29 ? index : -1;
 }
 
 export function surfaceHeightAt(x, z) {
@@ -92,7 +93,7 @@ export function stepPianist(player, input, delta) {
 export function keyFrequency(index) {
   const black = index >= WHITE_KEY_COUNT;
   const white = black ? index - WHITE_KEY_COUNT : index;
-  const semitones = [0, 2, 4, 5, 7, 9, 11];
-  const midi = 36 + Math.floor(white / 7) * 12 + semitones[white % 7] + (black ? 1 : 0);
+  const semitones = [0, 2, 3, 5, 7, 8, 10];
+  const midi = 21 + Math.floor(white / 7) * 12 + semitones[white % 7] + (black ? 1 : 0);
   return 440 * 2 ** ((midi - 69) / 12);
 }

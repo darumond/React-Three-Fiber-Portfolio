@@ -12,9 +12,8 @@ import {
 } from "./pianoState";
 import { PianoEnvironment } from "./PianoEnvironment";
 
-export function PianoScene({ active, menuOpened, viewportHeight }) {
+export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting, worldScale }) {
   const { size } = useThree();
-  const world = useRef();
   const input = useRef(new Set());
   const character = useRef();
   const shadow = useRef();
@@ -22,6 +21,7 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   const pressed = useRef(-1);
   const lastNote = useRef(-1);
   const facing = useRef(Math.PI);
+  const [entered, setEntered] = useState(false);
   const [animation, setAnimation] = useState("Luc_Falling");
   const locomotion = useRef({ speed: 0, phase: 0 });
   const landing = useRef({ previous: false, remaining: 0 });
@@ -30,10 +30,10 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   const lastTouchJump = useRef(touchJump);
   const sound = useAtomValue(pianoSoundAtom);
   const replay = useAtomValue(pianoReplayAtom);
+  const lastReplay = useRef(replay);
   const setActive = useSetAtom(pianoActiveAtom);
   const setDirection = useSetAtom(pianoDirectionAtom);
   const enabled = active && !menuOpened;
-  const scale = size.width < 768 ? 1.18 : 1.82;
   const avatarScale = size.width < 768 ? 0.38 : 0.34;
 
   useEffect(() => {
@@ -44,7 +44,18 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   }, [enabled, setActive, setDirection]);
 
   useEffect(() => {
-    if (!active) return;
+    if (atHome) {
+      setEntered(false);
+      pressed.current = -1;
+      cameraFollow.current = { x: 0.25, z: 0 };
+    }
+  }, [atHome, cameraFollow]);
+
+  useEffect(() => {
+    if (!active || (entered && lastReplay.current === replay)) return;
+    lastReplay.current = replay;
+    setEntered(true);
+    cameraFollow.current = { x: 0.25, z: 0 };
     player.current = createPianist();
     facing.current = Math.PI;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -57,7 +68,7 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
     setAnimation("Luc_Falling");
     locomotion.current.speed = 0;
     landing.current = { previous: false, remaining: 0 };
-  }, [active, replay]);
+  }, [active, replay, entered, cameraFollow]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -89,7 +100,7 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   }, [enabled, setDirection]);
 
   useFrame((_, delta) => {
-    if (!active || !character.current) return;
+    if (!entered || !character.current) return;
     const keys = input.current;
     const keyboardX = Number(keys.has("ArrowRight") || keys.has("KeyD")) - Number(keys.has("ArrowLeft") || keys.has("KeyA"));
     const keyboardZ = Number(keys.has("ArrowDown") || keys.has("KeyS")) - Number(keys.has("ArrowUp") || keys.has("KeyW"));
@@ -104,9 +115,9 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
     stepPianist(current, controls, delta);
     const followLimit = WALK_LIMIT - (size.width < 768 ? 0.95 : 2);
     const followX = THREE.MathUtils.clamp(current.x, -followLimit, followLimit);
-    world.current.position.x = THREE.MathUtils.damp(world.current.position.x, -followX, 4, delta);
+    cameraFollow.current.x = THREE.MathUtils.damp(cameraFollow.current.x, followX, 4, delta);
     const followZ = THREE.MathUtils.clamp((1.68 - current.z) * 0.4, -0.12, 0.9);
-    world.current.position.z = THREE.MathUtils.damp(world.current.position.z, followZ, 3, delta);
+    cameraFollow.current.z = THREE.MathUtils.damp(cameraFollow.current.z, followZ, 3, delta);
     const speed = Math.hypot(current.velocityX, current.velocityZ);
     locomotion.current.speed = current.landed ? Math.min(1, speed / RUN_SPEED) : 0;
     locomotion.current.phase = current.distance / (avatarScale * RUN_STRIDE);
@@ -135,14 +146,14 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   });
 
   return (
-    <group position={[0, -viewportHeight + 0.15, 0]} scale={scale} visible={active}>
-      <group ref={world} position-x={-0.25}>
-        <PianoEnvironment pressed={pressed} />
-        <mesh ref={shadow} rotation-x={-Math.PI / 2} position={[0.25, 0.12, 1.68]}>
+    <group>
+      <group>
+        <PianoEnvironment pressed={pressed} lighting={lighting} worldScale={worldScale} />
+        <mesh ref={shadow} visible={entered} rotation-x={-Math.PI / 2} position={[0.25, 0.12, 1.68]}>
           <circleGeometry args={[0.18, 24]} />
           <meshBasicMaterial color="#3d3e1f" transparent opacity={0.2} depthWrite={false} />
         </mesh>
-        {active && (
+        {entered && (
           <group ref={character} position={[0.25, 6, 1.68]} rotation-y={Math.PI} scale={avatarScale}>
             <Avatar animation={animation} locomotion={locomotion} />
           </group>

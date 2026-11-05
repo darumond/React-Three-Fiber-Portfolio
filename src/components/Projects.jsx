@@ -153,7 +153,7 @@ const Project = (props) => {
 
 export const currentProjectAtom = atom(Math.floor(projects.length / 2));
 
-export const Projects = () => {
+export const Projects = ({ layoutHeight }) => {
   const { viewport } = useThree();
   const [currentProject] = useAtom(currentProjectAtom);
   const isMobile = window.innerWidth < 768;
@@ -163,7 +163,7 @@ export const Projects = () => {
     y: 25,
   };
   return (
-    <motion.group position-y={-viewport.height * 2 - 0.5}
+    <motion.group position-y={-(layoutHeight ?? viewport.height) * 2 - 0.5}
     >
       {projects.map((project, index) => (
         <motion.group

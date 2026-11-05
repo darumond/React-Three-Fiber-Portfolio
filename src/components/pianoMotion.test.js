@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   createPianist, stepPianist, keyAtPosition, keyFrequency, surfaceHeightAt,
-  WALK_LIMIT, RUN_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT,
+  WALK_LIMIT, RUN_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT, KEY_WIDTH, BLACK_KEY_AFTER,
 } from "./pianoMotion.js";
 
 const idle = { x: 0, z: 0, jump: false };
@@ -82,11 +82,11 @@ test("all four edges hold during diagonal movement and repeated jumps", () => {
 });
 
 test("raised black keys support both running and jump landings", () => {
-  const player = { ...createPianist(), x: 0.5, z: 0, y: 2 };
+  const player = { ...createPianist(), x: KEY_WIDTH, z: 0, y: 2 };
   run(player, idle, 120);
   assert.equal(player.y, BLACK_KEY_HEIGHT);
   assert.equal(player.landed, true);
-  assert.equal(keyAtPosition(player.x, player.z), WHITE_KEY_COUNT + 14);
+  assert.equal(keyAtPosition(player.x, player.z), WHITE_KEY_COUNT + 26);
   stepPianist(player, { ...idle, jump: true }, 1 / 60);
   assert.ok(player.y > BLACK_KEY_HEIGHT);
   run(player, idle, 120);
@@ -112,4 +112,16 @@ test("white and black note pitches follow the piano intervals", () => {
   assert.ok(Math.abs(keyFrequency(7) / keyFrequency(0) - 2) < 1e-9);
   assert.ok(Math.abs(keyFrequency(1) / keyFrequency(0) - 2 ** (2 / 12)) < 1e-9);
   assert.ok(Math.abs(keyFrequency(WHITE_KEY_COUNT) / keyFrequency(0) - 2 ** (1 / 12)) < 1e-9);
+});
+
+test("the concert keyboard contains exactly 88 chromatic notes from A0 to C8", () => {
+  const notes = [];
+  for (let i = 0; i < WHITE_KEY_COUNT; i++) {
+    notes.push(keyFrequency(i));
+    if (i < WHITE_KEY_COUNT - 1 && BLACK_KEY_AFTER.includes(i % 7)) notes.push(keyFrequency(WHITE_KEY_COUNT + i));
+  }
+  assert.equal(notes.length, 88);
+  assert.equal(notes[0], 27.5);
+  assert.ok(Math.abs(notes.at(-1) - 4186.009044809578) < 1e-8);
+  for (let i = 1; i < notes.length; i++) assert.ok(Math.abs(notes[i] / notes[i - 1] - 2 ** (1 / 12)) < 1e-12);
 });
