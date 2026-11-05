@@ -28,12 +28,15 @@ export const Experience = ({ menuOpened }) => {
   const menu = useRef(0);
   const [ready, setReady] = useState(false);
   const [atHome, setAtHome] = useState(true);
+  const [projectsReady, setProjectsReady] = useState(false);
   const [reduced] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const scratch = useMemo(() => ({ camera: new THREE.Vector3(), target: new THREE.Vector3(), seat: new THREE.Vector3(), home: new THREE.Vector3() }), []);
 
   useFrame(({ camera }, delta) => {
     const phase = tourPhase(reduced ? scroll.scroll.current : scroll.offset, scroll.pages);
     if (phase.ready !== ready) setReady(phase.ready);
+    const showProjects = phase.page > 1.988;
+    if (showProjects !== projectsReady) setProjectsReady(showProjects);
     const home = phase.page < 0.02;
     if (home !== atHome) setAtHome(home);
     lighting.current = phase.zoom;
@@ -43,7 +46,7 @@ export const Experience = ({ menuOpened }) => {
     projectScroll.current.position.y = phase.page * layoutHeight;
     pianoAnchor.current.updateWorldMatrix(true, false);
     scratch.camera.set(follow.current.x, mobile ? 2.84 : 1.84, (mobile ? 8.47 : 5.49) - follow.current.z);
-    scratch.target.set(follow.current.x, mobile ? -0.127 : -0.082, -follow.current.z);
+    scratch.target.set(follow.current.x, mobile ? -0.72 : -0.5, -follow.current.z);
     pianoAnchor.current.localToWorld(scratch.camera);
     pianoAnchor.current.localToWorld(scratch.target);
     scratch.camera.y -= tour.current.position.y;
@@ -78,7 +81,7 @@ export const Experience = ({ menuOpened }) => {
         </group>
       </group>
       <group ref={projectScroll}>
-        <Projects layoutHeight={layoutHeight} />
+        <Projects layoutHeight={layoutHeight} active={projectsReady && !menuOpened} />
       </group>
     </>
   );
