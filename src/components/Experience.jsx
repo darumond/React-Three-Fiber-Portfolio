@@ -51,9 +51,7 @@ export const Experience = (props) => {
 
   useFrame((state) => {
     let curSection = Math.floor(data.scroll.current * data.pages);
-    if (curSection > 3) {
-      curSection = 3;
-    }
+    curSection = Math.min(curSection, data.pages - 1);
 
     if (curSection !== section) {
       setSection(curSection);
@@ -71,7 +69,7 @@ export const Experience = (props) => {
   return (
     <>
       <Background />
-      {section !== 1 && <motion.group ref={characterGroup} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
+      {section === 0 && <motion.group ref={characterGroup} rotation={[-3.1415926535897922, 1.4853981633974491, 3.1415926535897922]}
         animate={"" + section}
         transition={{
           duration: 0.7,
@@ -81,14 +79,6 @@ export const Experience = (props) => {
             scaleX: officeScaleRatio,
             scaleY: officeScaleRatio,
             scaleZ: officeScaleRatio,
-          },
-          3: {
-            y: -viewport.height * 3 + 1.5,
-            x: isMobile ? 0.3 : 1.1,
-            z: isMobile? 7.2: 8.5,
-            rotateX: 0,
-            rotateY: isMobile? -Math.PI / 8 : -Math.PI / 5,
-            rotateZ: 0,
           },
 
         }}>
