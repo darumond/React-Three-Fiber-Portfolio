@@ -5,6 +5,7 @@ import { animate, useMotionValue } from "framer-motion";
 import { motion } from "framer-motion-3d";
 import { atom, useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
+import { isProjectInteractionAllowed } from "./sceneInteraction";
 
 export const projects = [
 
@@ -38,7 +39,7 @@ export const projects = [
 
 
 const Project = (props) => {
-  const { project, highlighted, isCurrentProject } = props;
+  const { project, highlighted, isCurrentProject, active, ...groupProps } = props;
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = window.innerWidth < 768;
   const background = useRef();
@@ -47,9 +48,7 @@ const Project = (props) => {
   useEffect(() => {
     animate(bgOpacity, highlighted ? 0.7 : 0.4);
   }, [highlighted]);
-  useEffect(() => {
-    console.log(isHovered);
-  }, [isHovered]);
+  useEffect(() => { if (!active) setIsHovered(false); }, [active]);
   useFrame(() => {
     background.current.material.opacity = bgOpacity.get();
   });
@@ -76,14 +75,18 @@ const Project = (props) => {
   const responsiveMaxWidthDescription = isMobile ? 3 : maxWidthDescription;
   return (
     <group
-      {...props}
-      onPointerEnter={() => setIsHovered(isCurrentProject)}
-      onPointerLeave={() => setIsHovered(false)}
+      {...groupProps}
+      onPointerEnter={active ? (event) => setIsHovered(isCurrentProject && isProjectInteractionAllowed(active, event)) : undefined}
+      onPointerLeave={active ? () => setIsHovered(false) : undefined}
     >
 
       <mesh
         position-z={-0.001}
-        onClick={() => window.open(project.url, "_blank")}
+        onClick={active ? (event) => {
+          if (!isProjectInteractionAllowed(active, event)) return;
+          event.stopPropagation();
+          window.open(project.url, "_blank", "noopener,noreferrer");
+        } : undefined}
         ref={background}
       >
         <RoundedBox
@@ -153,7 +156,7 @@ const Project = (props) => {
 
 export const currentProjectAtom = atom(Math.floor(projects.length / 2));
 
-export const Projects = ({ layoutHeight }) => {
+export const Projects = ({ layoutHeight, active = false }) => {
   const { viewport } = useThree();
   const [currentProject] = useAtom(currentProjectAtom);
   const isMobile = window.innerWidth < 768;
@@ -178,7 +181,7 @@ export const Projects = ({ layoutHeight }) => {
           }}
 
         >
-          <Project project={project}
+          <Project project={project} active={active}
             highlighted={index === currentProject}
             isCurrentProject={index === currentProject}
           />

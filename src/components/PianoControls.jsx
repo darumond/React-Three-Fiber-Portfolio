@@ -6,6 +6,8 @@ import {
   pianoReplayAtom, pianoSoundAtom,
 } from "./pianoState";
 
+const stopSceneEvent = (event) => event.stopPropagation();
+
 export function PianoControls() {
   const [active] = useAtom(pianoActiveAtom);
   const [sound, setSound] = useAtom(pianoSoundAtom);
@@ -48,7 +50,10 @@ export function PianoControls() {
   };
 
   return (
-    <div className="piano-controls">
+    <div className="piano-controls" data-scene-ui
+      onPointerDown={stopSceneEvent} onPointerUp={stopSceneEvent}
+      onPointerMove={stopSceneEvent} onPointerCancel={stopSceneEvent}
+      onClick={stopSceneEvent} onDoubleClick={stopSceneEvent}>
       <div className="piano-controls-main">
         <button
           type="button"
