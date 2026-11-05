@@ -10,6 +10,7 @@ import { Leva } from "leva";
 import { framerMotionConfig } from "./config";
 import { Cursor } from "./components/Cursor";
 import { LoadingScreen } from "./components/LoadingScreen";
+import { PianoMusic } from "./components/PianoMusic";
 
 function App() {
   const [section, setSection] = useState(0);
@@ -38,6 +39,7 @@ function App() {
             </Scroll>
           </ScrollControls>
         </Canvas>
+        <PianoMusic />
         <Menu onSectionChange={setSection}
           menuOpened={menuOpened}
           setMenuOpened={setMenuOpened} />

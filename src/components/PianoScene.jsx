@@ -8,7 +8,6 @@ import {
 } from "./pianoMotion";
 import {
   pianoActiveAtom, pianoDirectionAtom, pianoJumpAtom, pianoReplayAtom,
-  pianoSoundAtom, playPianoNote,
 } from "./pianoState";
 import { PianoEnvironment } from "./PianoEnvironment";
 
@@ -20,7 +19,6 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
   const player = useRef(createPianist());
   const journey = useRef({ furthestX: PIANIST_START_X, landed: false, generation: 0 });
   const pressed = useRef(-1);
-  const lastNote = useRef(-1);
   const facing = useRef(Math.PI);
   const [entered, setEntered] = useState(false);
   const [animation, setAnimation] = useState("Luc_Falling");
@@ -29,7 +27,6 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
   const touchDirection = useAtomValue(pianoDirectionAtom);
   const touchJump = useAtomValue(pianoJumpAtom);
   const lastTouchJump = useRef(touchJump);
-  const sound = useAtomValue(pianoSoundAtom);
   const replay = useAtomValue(pianoReplayAtom);
   const lastReplay = useRef(replay);
   const setActive = useSetAtom(pianoActiveAtom);
@@ -67,7 +64,6 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
       player.current.landed = true;
     }
     pressed.current = -1;
-    lastNote.current = -1;
     setAnimation("Luc_Falling");
     locomotion.current.speed = 0;
     landing.current = { previous: false, remaining: 0 };
@@ -144,10 +140,6 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
     shadow.current.material.opacity = Math.max(0.02, 0.2 - altitude * 0.06);
     shadow.current.scale.setScalar(1 + altitude * 0.15);
     pressed.current = current.landed ? keyAtPosition(current.x, current.z) : -1;
-    if (pressed.current !== lastNote.current) {
-      lastNote.current = pressed.current;
-      if (sound && enabled && pressed.current >= 0) playPianoNote(pressed.current);
-    }
   });
 
   return (
