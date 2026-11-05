@@ -123,7 +123,20 @@ function BlackKey({ index, pressed }) {
   );
 }
 
-export function PianoEnvironment({ pressed }) {
+export function PianoEnvironment({ pressed, lighting, worldScale = 1 }) {
+  const keyLight = useRef();
+  const lightTarget = useRef();
+  const candleLight = useRef();
+  const fillLight = useRef();
+  const hemisphere = useRef();
+  useEffect(() => { keyLight.current.target = lightTarget.current; }, []);
+  useFrame(() => {
+    const amount = lighting.current;
+    keyLight.current.intensity = 2.2 * amount;
+    candleLight.current.intensity = 2 * worldScale * worldScale * amount;
+    fillLight.current.intensity = 1.5 * worldScale * worldScale * amount;
+    hemisphere.current.intensity = 0.7 * amount;
+  });
   const grain = useMemo(() => makeTexture(), []);
   const pages = useMemo(() => makeTexture(true), []);
   useEffect(() => () => { grain.dispose(); pages.dispose(); }, [grain, pages]);
@@ -133,7 +146,7 @@ export function PianoEnvironment({ pressed }) {
       <Block size={[15.1, 0.65, 5]} position={[0, -0.43, 0.45]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.1} />
       <Block size={[15.4, 0.18, 0.65]} position={[0, -0.12, 2.55]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.08} />
       <Block size={[15.4, 0.055, 0.06]} position={[0, -0.1, 2.89]} color={GOLD} metalness={0.5} radius={0.01} />
-      <Block size={[15.5, 12, 0.7]} position={[0, -6.5, 2.5]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.08} />
+      <Block size={[15.5, 5.8, 0.7]} position={[0, -3.4, 2.5]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.08} />
       <Block size={[15.6, 0.12, 0.95]} position={[0, -0.77, 2.7]} color="#151619" metalness={0.18} roughness={0.28} radius={0.04} />
       <Block size={[15.5, 1.6, 0.5]} position={[0, 0.8, -1.75]} color="#151619" metalness={0.18} roughness={0.28} map={grain} radius={0.04} />
       <Block size={[15.55, 0.065, 0.065]} position={[0, 0.2, -1.45]} color={GOLD} metalness={0.45} radius={0.01} />
@@ -159,16 +172,14 @@ export function PianoEnvironment({ pressed }) {
       <Candle position={[4.6, 1.71, -2.4]} height={1.4} color="#e6d8ab" phase={6} />
       <Candle position={[-5.1, 1.71, -2.05]} height={0.55} color="#e9d3a5" phase={7} />
 
-      <Block size={[60, 25, 0.5]} position={[0, 5, -8]} color="#b0a887" map={grain} radius={0.01} roughness={1} />
-      {[-10, -5, 0, 5, 10].map((x) => (
-        <Block key={x} size={[0.075, 18, 0.2]} position={[x, 4, -7.7]} color="#93815c" radius={0.01} />
-      ))}
-      <directionalLight castShadow color="#fff0cb" position={[-4, 8, 2]} intensity={2.2}
-        shadow-mapSize={[2048, 2048]} shadow-camera-left={-11} shadow-camera-right={11}
-        shadow-camera-top={10} shadow-camera-bottom={-5} shadow-normalBias={0.025} shadow-bias={-0.0001} />
-      <pointLight position={[-0.9, 3.3, -1]} color="#ffb858" intensity={2} distance={8} decay={2} />
-      <pointLight position={[4.2, 3.2, -1]} color="#ffd68c" intensity={1.5} distance={7} decay={2} />
-      <hemisphereLight args={["#f5e2b7", "#44452d", 0.7]} />
+      <object3D ref={lightTarget} />
+      <directionalLight ref={keyLight} castShadow color="#fff0cb" position={[-4, 8, 2]} intensity={2.2}
+        shadow-mapSize={[2048, 2048]} shadow-camera-left={-11 * worldScale} shadow-camera-right={11 * worldScale}
+        shadow-camera-top={10 * worldScale} shadow-camera-bottom={-5 * worldScale} shadow-camera-near={0.01} shadow-camera-far={30}
+        shadow-normalBias={0.025 * worldScale} shadow-bias={-0.0001} />
+      <pointLight ref={candleLight} position={[-0.9, 3.3, -1]} color="#ffb858" intensity={2} distance={8 * worldScale} decay={2} />
+      <pointLight ref={fillLight} position={[4.2, 3.2, -1]} color="#ffd68c" intensity={1.5} distance={7 * worldScale} decay={2} />
+      <hemisphereLight ref={hemisphere} args={["#f5e2b7", "#44452d", 0.7]} />
     </group>
   );
 }
