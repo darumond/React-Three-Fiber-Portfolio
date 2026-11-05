@@ -9,6 +9,9 @@ import { useFrame, useGraph } from '@react-three/fiber';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { useControls } from "leva";
 import * as THREE from 'three';
+import pianoWalkClips from './pianoWalkClips.json';
+
+const pianoClips = pianoWalkClips.map((clip) => THREE.AnimationClip.parse(clip));
 
 export function Avatar(props) {
 
@@ -33,13 +36,14 @@ export function Avatar(props) {
   fallingAnimation[0].name = "Luc_Falling"
   listeningAnimation[0].name = "Luc_Listening"
   saluteAnimation[0].name = "Luc_Salute"
-  const clips = useMemo(() => [typingAnimation[0], standingAnimation[0], fallingAnimation[0], listeningAnimation[0], saluteAnimation[0]].map((clip) => {
+  const clips = useMemo(() => [...pianoClips, typingAnimation[0], standingAnimation[0], fallingAnimation[0], listeningAnimation[0], saluteAnimation[0]].map((clip) => {
     const copy = clip.clone();
     copy.tracks = copy.tracks.filter((track) => !track.name.startsWith("Armature."));
     return copy;
   }), [typingAnimation, standingAnimation, fallingAnimation, listeningAnimation, saluteAnimation]);
-  const { actions } = useAnimations(clips, group)
+  const { actions, mixer } = useAnimations(clips, group)
   const gait = useRef(0);
+  const groundedBlend = useRef(0);
   useEffect(() => {
     group.current?.traverse((object) => {
       if (object.isMesh) object.castShadow = true;
@@ -49,14 +53,16 @@ export function Avatar(props) {
   useFrame((state, delta) => {
     const speed = locomotion?.current.speed ?? (walking ? 1 : 0);
     gait.current = THREE.MathUtils.damp(gait.current, speed, 10, delta);
-    if (gait.current > 0.001) {
-      const stride = Math.sin(locomotion?.current.phase ?? state.clock.elapsedTime * 12) * gait.current;
-      nodes.LeftUpLeg.rotation.x += stride * 0.4;
-      nodes.RightUpLeg.rotation.x -= stride * 0.4;
-      nodes.LeftLeg.rotation.x += Math.max(0, -stride) * 0.3;
-      nodes.RightLeg.rotation.x += Math.max(0, stride) * 0.3;
-      nodes.LeftArm.rotation.x -= stride * 0.22;
-      nodes.RightArm.rotation.x += stride * 0.22;
+    if (locomotion && actions.Luc_Walk) {
+      groundedBlend.current = THREE.MathUtils.damp(groundedBlend.current, animation === "Luc_Standing" ? 1 : 0, 14, delta);
+      const ground = groundedBlend.current;
+      actions.Luc_PianoIdle.setEffectiveWeight(ground * (1 - gait.current));
+      actions.Luc_Walk.setEffectiveWeight(ground * gait.current);
+      actions.Luc_Falling.setEffectiveWeight(1 - ground);
+      // Distance drives the full-body cycle, including the shoulders, elbows,
+      // wrists, hips and feet. It does not keep stepping after movement stops.
+      actions.Luc_Walk.time = (locomotion.current.phase % 1) * actions.Luc_Walk.getClip().duration;
+      mixer.update(0);
     }
     if (headFollow) {
       group.current.getObjectByName("Head").lookAt(state.camera.position)
@@ -69,12 +75,24 @@ export function Avatar(props) {
   }, []);
 
   useEffect(() => {
+    if (locomotion) return;
     const action = actions[animation];
     action?.reset().fadeIn(0.25).play();
     return () => {
       action?.fadeOut(0.25);
     }
-  }, [animation]);
+  }, [animation, locomotion]);
+
+  useEffect(() => {
+    if (!locomotion) return;
+    const idle = actions.Luc_PianoIdle;
+    const walk = actions.Luc_Walk;
+    const falling = actions.Luc_Falling;
+    idle.reset().setEffectiveWeight(0).play();
+    walk.reset().setEffectiveTimeScale(0).setEffectiveWeight(0).play();
+    falling.reset().setEffectiveWeight(1).play();
+    return () => { idle.stop(); walk.stop(); falling.stop(); };
+  }, [actions, locomotion]);
 
   // useEffect(()=>{
   //   Object.values(materials).forEach((material)=>{

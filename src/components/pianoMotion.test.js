@@ -69,7 +69,8 @@ test("holding jump creates one jump and lands without auto-bouncing", () => {
 test("all four edges hold during diagonal movement and repeated jumps", () => {
   const player = grounded();
   for (const [x, z] of [[1, 1], [-1, 1], [-1, -1], [1, -1]]) {
-    for (let frame = 0; frame < 1200; frame++) {
+    const framesToCross = Math.ceil((2 * WALK_LIMIT + 2) * Math.SQRT2 / WALK_SPEED * 60);
+    for (let frame = 0; frame < framesToCross; frame++) {
       stepPianist(player, { x, z, jump: frame % 70 === 0 }, 1 / 60);
       assert.ok(player.x >= -WALK_LIMIT && player.x <= WALK_LIMIT);
       assert.ok(player.z >= MIN_Z && player.z <= MAX_Z);

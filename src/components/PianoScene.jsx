@@ -33,7 +33,8 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
   const setActive = useSetAtom(pianoActiveAtom);
   const setDirection = useSetAtom(pianoDirectionAtom);
   const enabled = active && !menuOpened;
-  const scale = size.width < 768 ? 1.05 : 1.65;
+  const scale = size.width < 768 ? 1.18 : 1.82;
+  const avatarScale = size.width < 768 ? 0.38 : 0.34;
 
   useEffect(() => {
     setActive(enabled);
@@ -101,12 +102,14 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
     } : { x: 0, z: 0, jump: false };
     const current = player.current;
     stepPianist(current, controls, delta);
-    const followLimit = WALK_LIMIT - (size.width < 768 ? 1.6 : 2.6);
+    const followLimit = WALK_LIMIT - (size.width < 768 ? 0.95 : 2);
     const followX = THREE.MathUtils.clamp(current.x, -followLimit, followLimit);
     world.current.position.x = THREE.MathUtils.damp(world.current.position.x, -followX, 4, delta);
+    const followZ = THREE.MathUtils.clamp((1.68 - current.z) * 0.4, -0.12, 0.9);
+    world.current.position.z = THREE.MathUtils.damp(world.current.position.z, followZ, 3, delta);
     const speed = Math.hypot(current.velocityX, current.velocityZ);
     locomotion.current.speed = current.landed ? Math.min(1, speed / WALK_SPEED) : 0;
-    locomotion.current.phase = current.distance * 15;
+    locomotion.current.phase = current.distance / (avatarScale * 1.46);
     const nextAnimation = current.landed ? "Luc_Standing" : "Luc_Falling";
     if (nextAnimation !== animation) setAnimation(nextAnimation);
     if (speed > 0.08) facing.current = Math.atan2(current.velocityX, current.velocityZ);
@@ -116,10 +119,9 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
     landing.current.previous = current.landed;
     landing.current.remaining = Math.max(0, landing.current.remaining - delta);
     const squash = Math.sin(landing.current.remaining / 0.16 * Math.PI) * 0.08;
-    const baseScale = size.width < 768 ? 0.34 : 0.27;
+    const baseScale = avatarScale;
     character.current.scale.set(baseScale * (1 + squash / 2), baseScale * (1 - squash), baseScale * (1 + squash / 2));
-    const bob = current.landed ? Math.abs(Math.sin(current.distance * 15)) * 0.025 * locomotion.current.speed : 0;
-    character.current.position.set(current.x, 0.05 + current.y + bob, current.z);
+    character.current.position.set(current.x, 0.05 + current.y, current.z);
     const floor = surfaceHeightAt(current.x, current.z);
     const altitude = Math.max(0, current.y - floor);
     shadow.current.position.set(current.x, floor + 0.12, current.z);
@@ -141,7 +143,7 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
           <meshBasicMaterial color="#3d3e1f" transparent opacity={0.2} depthWrite={false} />
         </mesh>
         {active && (
-          <group ref={character} position={[0.25, 6, 1.68]} rotation-y={Math.PI} scale={size.width < 768 ? 0.34 : 0.27}>
+          <group ref={character} position={[0.25, 6, 1.68]} rotation-y={Math.PI} scale={avatarScale}>
             <Avatar animation={animation} locomotion={locomotion} />
           </group>
         )}
