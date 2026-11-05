@@ -160,3 +160,13 @@ body {
   .piano-inscription, .piano-inscription-link { transition: none; }
   .piano-reveal { transform: none; filter: none; }
 }
+
+.piano-inscription-note { width: 310px; transform: rotate(-10deg); }
+.piano-inscription-handwritten { margin: 0; color: #d6c196; font: italic 26px/32px Georgia, 'Times New Roman', serif; letter-spacing: -.025em; }
+.piano-inscription-handwritten .piano-inscription-line { gap: .25em; }
+.piano-music-caption { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 7px; color: #f1dfb9; font-size: 10px; line-height: 1.5; text-shadow: 0 1px 6px #080a0d; }
+.piano-music-credit { color: #c6baa4; font-size: 9px; }
+.piano-music-credit a { text-decoration: underline; text-underline-offset: 3px; pointer-events: auto; }
+.piano-music-credit a:hover { color: #fff1d4; }
+.piano-music-credit a:focus-visible { outline: 1px solid #ebcfa0; outline-offset: 4px; }
+@media (max-height: 540px) { .piano-music-caption { flex-direction: row; justify-content: center; gap: 8px; margin-top: 3px; font-size: 9px; } .piano-music-credit { font-size: 8px; } }

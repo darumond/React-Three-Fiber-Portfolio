@@ -2,15 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { ArrowUp, Move, RotateCcw, Volume2, VolumeX } from "react-feather";
 import {
-  enablePianoSound, pianoActiveAtom, pianoDirectionAtom, pianoJumpAtom,
-  pianoReplayAtom, pianoSoundAtom,
+  pianoActiveAtom, pianoDirectionAtom, pianoJumpAtom,
+  pianoReplayAtom, pianoMusicEnabledAtom, pianoMusicStatusAtom,
 } from "./pianoState";
+import { startPianoMusic } from "./PianoMusic";
+import { PIANO_TRACK } from "./pianoMusicController";
 
 const stopSceneEvent = (event) => event.stopPropagation();
 
 export function PianoControls() {
   const [active] = useAtom(pianoActiveAtom);
-  const [sound, setSound] = useAtom(pianoSoundAtom);
+  const setMusicEnabled = useSetAtom(pianoMusicEnabledAtom);
+  const [musicStatus] = useAtom(pianoMusicStatusAtom);
+  const playing = musicStatus === "playing";
+  const musicLabel = playing ? "Music on" : musicStatus === "loading" ? "Loading music…" :
+    musicStatus === "blocked" ? "Play music" : musicStatus === "error" ? "Retry music" : "Music off";
+  const toggleMusic = () => {
+    if (playing || musicStatus === "loading") setMusicEnabled(false);
+    else { setMusicEnabled(true); startPianoMusic(); }
+  };
   const setDirection = useSetAtom(pianoDirectionAtom);
   const jump = useSetAtom(pianoJumpAtom);
   const replay = useSetAtom(pianoReplayAtom);
@@ -103,13 +113,26 @@ export function PianoControls() {
           <RotateCcw size={15} aria-hidden="true" /> Drop again
         </button>
         <span className="piano-control-divider" aria-hidden="true" />
-        <button type="button" aria-pressed={sound} disabled={!active} onClick={async () => {
-          if (sound) setSound(false);
-          else setSound(await enablePianoSound());
-        }}>
-          {sound ? <Volume2 size={16} aria-hidden="true" /> : <VolumeX size={16} aria-hidden="true" />}
-          Sound {sound ? "on" : "off"}
+        <button type="button" data-music-toggle aria-pressed={playing} disabled={!active} onClick={toggleMusic}
+          onKeyDown={(event) => {
+            if (event.key === " " || event.key === "Enter") {
+              event.preventDefault(); event.stopPropagation();
+              if (!event.repeat) toggleMusic();
+            }
+          }} onKeyUp={(event) => {
+            if (event.key === " " || event.key === "Enter") { event.preventDefault(); event.stopPropagation(); }
+          }}>
+          {playing ? <Volume2 size={16} aria-hidden="true" /> : <VolumeX size={16} aria-hidden="true" />}
+          {musicLabel}
         </button>
+      </div>
+      <div className="piano-music-caption">
+        <span>{PIANO_TRACK.title} <span aria-hidden="true">·</span> Liszt</span>
+        <span className="piano-music-credit">
+          <a href={PIANO_TRACK.source} target="_blank" rel="noopener noreferrer">{PIANO_TRACK.performer}</a>
+          <span aria-hidden="true"> · </span>
+          <a href={PIANO_TRACK.license} target="_blank" rel="noopener noreferrer">CC BY-SA 2.0</a>
+        </span>
       </div>
     </div>
   );

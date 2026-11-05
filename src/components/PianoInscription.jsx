@@ -7,7 +7,7 @@ import { pianoActiveAtom } from "./pianoState";
 const stopSceneEvent = (event) => event.stopPropagation();
 const clamp = (value) => Math.max(0, Math.min(1, value));
 
-function Inscription({ x, journey, children, from, to }) {
+function Inscription({ x, y = 0.86, className = "", journey, children, from, to, flourish = true }) {
   const active = useAtomValue(pianoActiveAtom);
   const { fixed } = useScroll();
   const { size } = useThree();
@@ -46,15 +46,15 @@ function Inscription({ x, journey, children, from, to }) {
     else words.current.delete(key);
   }}>{text}{" "}</span>;
 
-  return <Html transform portal={{ current: fixed }} position={[x, 0.86, -1.735]}
+  return <Html transform portal={{ current: fixed }} position={[x, y, -1.735]}
     distanceFactor={size.width < 768 ? 2.45 : 2.6} zIndexRange={[4, 0]} pointerEvents="none">
-    <div ref={root} className={"piano-inscription" + (active ? " is-visible" : "")} data-scene-ui
+    <div ref={root} className={"piano-inscription " + className + (active ? " is-visible" : "")} data-scene-ui
       aria-hidden="true" inert={active ? undefined : ""}
       onPointerDown={stopSceneEvent} onPointerUp={stopSceneEvent} onPointerMove={stopSceneEvent}
       onClick={stopSceneEvent} onDoubleClick={stopSceneEvent}
       onKeyDown={stopSceneEvent} onKeyUp={stopSceneEvent}>
       {children(word, link)}
-      <span className="piano-inscription-flourish" aria-hidden="true" />
+      {flourish && <span className="piano-inscription-flourish" aria-hidden="true" />}
     </div>
   </Html>;
 }
@@ -88,6 +88,13 @@ export const PianoInscription = memo(function PianoInscription({ journey }) {
           <span className="piano-inscription-line">{word("piano.", 4.6)}</span>
         </p>
       </>}
+    </Inscription>
+    <Inscription x={6.45} y={0.92} from={5.05} to={6.4} journey={journey} className="piano-inscription-note" flourish={false}>
+      {(word) => <p className="piano-inscription-handwritten">
+        <span className="piano-inscription-line">{["You", "can", "listen", "to"].map((text, i) => word(text, 5.05 + i * 0.085))}</span>
+        <span className="piano-inscription-line">{["the", "piece", "I", "am"].map((text, i) => word(text, 5.39 + i * 0.085))}</span>
+        <span className="piano-inscription-line">{["currently", "learning", ":)"].map((text, i) => word(text, 5.73 + i * 0.085))}</span>
+      </p>}
     </Inscription>
   </>;
 });
