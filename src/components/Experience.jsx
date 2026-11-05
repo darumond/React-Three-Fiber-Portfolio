@@ -17,7 +17,7 @@ export const Experience = ({ menuOpened }) => {
   // This keeps the room and project layout stable when resizing on the keys.
   const layoutHeight = 2 * Math.tan(THREE.MathUtils.degToRad(25)) * Math.hypot(3.5, 10);
   const roomScale = Math.max(0.5, Math.min(0.9 * layoutHeight * size.width / size.height / 12, 0.9));
-  const pianoScale = 0.15;
+  const pianoScale = 0.105;
   const tour = useRef();
   const projectScroll = useRef();
   const pianoAnchor = useRef();
@@ -71,7 +71,7 @@ export const Experience = ({ menuOpened }) => {
           scale={roomScale} rotation-y={-Math.PI / 4}>
           <Office section={0} />
           <group ref={seat} position={[-0.15, 0.25, -0.8]} />
-          <group ref={pianoAnchor} name="SharedPiano" position={[2.2, 0.922, 0.1]} scale={pianoScale}>
+          <group ref={pianoAnchor} name="SharedPiano" position={[2.1, 0.922, 1.35]} rotation-y={0.45} scale={pianoScale}>
             <PianoScene active={ready} atHome={atHome} menuOpened={menuOpened}
               cameraFollow={follow} lighting={lighting} worldScale={pianoScale * roomScale} />
           </group>
