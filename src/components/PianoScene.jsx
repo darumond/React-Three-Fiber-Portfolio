@@ -4,7 +4,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import * as THREE from "three";
 import { Avatar } from "./Avatar";
 import {
-  createPianist, keyAtPosition, stepPianist, WALK_LIMIT, WALK_SPEED, surfaceHeightAt,
+  createPianist, keyAtPosition, stepPianist, WALK_LIMIT, RUN_SPEED, RUN_STRIDE, surfaceHeightAt,
 } from "./pianoMotion";
 import {
   pianoActiveAtom, pianoDirectionAtom, pianoJumpAtom, pianoReplayAtom,
@@ -108,8 +108,8 @@ export function PianoScene({ active, menuOpened, viewportHeight }) {
     const followZ = THREE.MathUtils.clamp((1.68 - current.z) * 0.4, -0.12, 0.9);
     world.current.position.z = THREE.MathUtils.damp(world.current.position.z, followZ, 3, delta);
     const speed = Math.hypot(current.velocityX, current.velocityZ);
-    locomotion.current.speed = current.landed ? Math.min(1, speed / WALK_SPEED) : 0;
-    locomotion.current.phase = current.distance / (avatarScale * 1.46);
+    locomotion.current.speed = current.landed ? Math.min(1, speed / RUN_SPEED) : 0;
+    locomotion.current.phase = current.distance / (avatarScale * RUN_STRIDE);
     const nextAnimation = current.landed ? "Luc_Standing" : "Luc_Falling";
     if (nextAnimation !== animation) setAnimation(nextAnimation);
     if (speed > 0.08) facing.current = Math.atan2(current.velocityX, current.velocityZ);

@@ -72,7 +72,7 @@ export function PianoControls() {
             <Move size={19} aria-hidden="true" />
           </span>
         </button>
-        <p id="piano-movement-help">Explore the keys<span>WASD / arrows to move</span><span>Space to jump · drag to steer</span></p>
+        <p id="piano-movement-help">Explore the keys<span>WASD / arrows to run</span><span>Space to jump · drag to steer</span></p>
         <button
           type="button"
           className="piano-jump"

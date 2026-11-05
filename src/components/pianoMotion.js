@@ -2,7 +2,9 @@ export const WHITE_KEY_COUNT = 28;
 export const KEY_WIDTH = 0.5;
 export const PIANO_WIDTH = WHITE_KEY_COUNT * KEY_WIDTH;
 export const WALK_LIMIT = PIANO_WIDTH / 2 - KEY_WIDTH / 2;
-export const WALK_SPEED = 1.2;
+export const RUN_SPEED = 2.8;
+// Full-size stride matches the planted-foot travel in the authored sprint.
+export const RUN_STRIDE = 5.6;
 export const MIN_Z = -1.15;
 export const MAX_Z = 1.97;
 export const BLACK_KEY_HEIGHT = 0.3;
@@ -40,8 +42,8 @@ export function stepPianist(player, input, delta) {
   const dt = Math.min(Math.max(delta, 0), 0.05);
   const length = Math.hypot(input.x || 0, input.z || 0);
   const divisor = Math.max(1, length);
-  const targetX = (input.x || 0) / divisor * WALK_SPEED;
-  const targetZ = (input.z || 0) / divisor * WALK_SPEED;
+  const targetX = (input.x || 0) / divisor * RUN_SPEED;
+  const targetZ = (input.z || 0) / divisor * RUN_SPEED;
   if (input.jump && !player.jumpHeld && player.hasLanded) player.jumpBuffer = 0.13;
   player.jumpHeld = !!input.jump;
   const steps = Math.max(1, Math.ceil(dt * 120));

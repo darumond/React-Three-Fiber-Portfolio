@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   createPianist, stepPianist, keyAtPosition, keyFrequency, surfaceHeightAt,
-  WALK_LIMIT, WALK_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT,
+  WALK_LIMIT, RUN_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT,
 } from "./pianoMotion.js";
 
 const idle = { x: 0, z: 0, jump: false };
@@ -36,13 +36,13 @@ test("diagonal input has the same speed as moving along one axis", () => {
   run(straight, { x: 1, z: 0 }, 24);
   run(diagonal, { x: 1, z: -1 }, 24);
   assert.ok(Math.abs(Math.hypot(diagonal.x - 0.25, diagonal.z - 1.68) - (straight.x - 0.25)) < 1e-9);
-  assert.ok(Math.hypot(diagonal.velocityX, diagonal.velocityZ) <= WALK_SPEED);
+  assert.ok(Math.hypot(diagonal.velocityX, diagonal.velocityZ) <= RUN_SPEED);
 });
 
 test("movement eases in and brakes smoothly after releasing input", () => {
   const player = grounded();
   stepPianist(player, { x: 1 }, 1 / 60);
-  assert.ok(player.velocityX > 0 && player.velocityX < WALK_SPEED);
+  assert.ok(player.velocityX > 0 && player.velocityX < RUN_SPEED);
   run(player, { x: 1 }, 30);
   const velocity = player.velocityX;
   stepPianist(player, idle, 1 / 60);
@@ -69,7 +69,7 @@ test("holding jump creates one jump and lands without auto-bouncing", () => {
 test("all four edges hold during diagonal movement and repeated jumps", () => {
   const player = grounded();
   for (const [x, z] of [[1, 1], [-1, 1], [-1, -1], [1, -1]]) {
-    const framesToCross = Math.ceil((2 * WALK_LIMIT + 2) * Math.SQRT2 / WALK_SPEED * 60);
+    const framesToCross = Math.ceil((2 * WALK_LIMIT + 2) * Math.SQRT2 / RUN_SPEED * 60);
     for (let frame = 0; frame < framesToCross; frame++) {
       stepPianist(player, { x, z, jump: frame % 70 === 0 }, 1 / 60);
       assert.ok(player.x >= -WALK_LIMIT && player.x <= WALK_LIMIT);
@@ -81,7 +81,7 @@ test("all four edges hold during diagonal movement and repeated jumps", () => {
   }
 });
 
-test("raised black keys support both walking and jump landings", () => {
+test("raised black keys support both running and jump landings", () => {
   const player = { ...createPianist(), x: 0.5, z: 0, y: 2 };
   run(player, idle, 120);
   assert.equal(player.y, BLACK_KEY_HEIGHT);
@@ -104,7 +104,7 @@ test("a background frame cannot teleport the player beyond the play area", () =>
   const player = grounded();
   const start = player.x;
   stepPianist(player, { x: 1, z: 1, jump: true }, 60);
-  assert.ok(player.x - start <= WALK_SPEED * 0.05);
+  assert.ok(player.x - start <= RUN_SPEED * 0.05);
   assert.ok(player.z <= MAX_Z);
 });
 

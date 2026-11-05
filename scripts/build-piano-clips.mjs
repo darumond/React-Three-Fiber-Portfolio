@@ -134,6 +134,6 @@ function retarget(sourceName, outputName) {
   };
 }
 
-const clips = [retarget("Walk_Loop", "Luc_Walk"), retarget("Idle_Loop", "Luc_PianoIdle")];
-fs.writeFileSync("src/components/pianoWalkClips.json", JSON.stringify(clips));
+const clips = [retarget("Sprint_Loop", "Luc_Run"), retarget("Idle_Loop", "Luc_PianoIdle")];
+fs.writeFileSync("src/components/pianoRunClips.json", JSON.stringify(clips));
 console.log(clips.map((clip) => ({ name: clip.name, duration: clip.duration, tracks: clip.tracks.length })));

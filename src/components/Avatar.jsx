@@ -9,13 +9,13 @@ import { useFrame, useGraph } from '@react-three/fiber';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { useControls } from "leva";
 import * as THREE from 'three';
-import pianoWalkClips from './pianoWalkClips.json';
+import pianoRunClips from './pianoRunClips.json';
 
-const pianoClips = pianoWalkClips.map((clip) => THREE.AnimationClip.parse(clip));
+const pianoClips = pianoRunClips.map((clip) => THREE.AnimationClip.parse(clip));
 
 export function Avatar(props) {
 
-  const {animation, walking = false, locomotion, ...groupProps} = props;
+  const {animation, locomotion, ...groupProps} = props;
   const { headFollow,cursorFollow, wireframe} = useControls({
     headFollow: false,
     cursorFollow: false,
@@ -51,17 +51,17 @@ export function Avatar(props) {
   }, []);
 
   useFrame((state, delta) => {
-    const speed = locomotion?.current.speed ?? (walking ? 1 : 0);
+    const speed = locomotion?.current.speed ?? 0;
     gait.current = THREE.MathUtils.damp(gait.current, speed, 10, delta);
-    if (locomotion && actions.Luc_Walk) {
+    if (locomotion && actions.Luc_Run) {
       groundedBlend.current = THREE.MathUtils.damp(groundedBlend.current, animation === "Luc_Standing" ? 1 : 0, 14, delta);
       const ground = groundedBlend.current;
       actions.Luc_PianoIdle.setEffectiveWeight(ground * (1 - gait.current));
-      actions.Luc_Walk.setEffectiveWeight(ground * gait.current);
+      actions.Luc_Run.setEffectiveWeight(ground * gait.current);
       actions.Luc_Falling.setEffectiveWeight(1 - ground);
       // Distance drives the full-body cycle, including the shoulders, elbows,
       // wrists, hips and feet. It does not keep stepping after movement stops.
-      actions.Luc_Walk.time = (locomotion.current.phase % 1) * actions.Luc_Walk.getClip().duration;
+      actions.Luc_Run.time = (locomotion.current.phase % 1) * actions.Luc_Run.getClip().duration;
       mixer.update(0);
     }
     if (headFollow) {
@@ -86,12 +86,12 @@ export function Avatar(props) {
   useEffect(() => {
     if (!locomotion) return;
     const idle = actions.Luc_PianoIdle;
-    const walk = actions.Luc_Walk;
+    const run = actions.Luc_Run;
     const falling = actions.Luc_Falling;
     idle.reset().setEffectiveWeight(0).play();
-    walk.reset().setEffectiveTimeScale(0).setEffectiveWeight(0).play();
+    run.reset().setEffectiveTimeScale(0).setEffectiveWeight(0).play();
     falling.reset().setEffectiveWeight(1).play();
-    return () => { idle.stop(); walk.stop(); falling.stop(); };
+    return () => { idle.stop(); run.stop(); falling.stop(); };
   }, [actions, locomotion]);
 
   // useEffect(()=>{

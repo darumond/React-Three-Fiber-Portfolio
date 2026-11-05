@@ -3,9 +3,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import * as THREE from "three";
 
-const clips = JSON.parse(fs.readFileSync(new URL("./pianoWalkClips.json", import.meta.url), "utf8"));
+const clips = JSON.parse(fs.readFileSync(new URL("./pianoRunClips.json", import.meta.url), "utf8"));
 
-function sampleWalk() {
+function sampleRun() {
   const bytes = fs.readFileSync(new URL("../../public/models/64bd36ce0efdb0d632fdfe7f.glb", import.meta.url));
   const gltf = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString());
   const bones = gltf.nodes.map((node) => {
@@ -20,7 +20,7 @@ function sampleWalk() {
   root.rotation.x = -Math.PI / 2;
   bones.filter((bone) => !bone.parent).forEach((bone) => root.add(bone));
   const named = Object.fromEntries(bones.map((bone) => [bone.name, bone]));
-  const clip = THREE.AnimationClip.parse(clips.find((candidate) => candidate.name === "Luc_Walk"));
+  const clip = THREE.AnimationClip.parse(clips.find((candidate) => candidate.name === "Luc_Run"));
   const mixer = new THREE.AnimationMixer(root);
   mixer.clipAction(clip).play();
   const samples = [];
@@ -33,7 +33,7 @@ function sampleWalk() {
   return samples;
 }
 
-test("walk and idle clips loop without a pose discontinuity", () => {
+test("run and idle clips loop without a pose discontinuity", () => {
   for (const clip of clips) {
     for (const track of clip.tracks) {
       const width = track.type === "quaternion" ? 4 : 3;
@@ -47,8 +47,8 @@ test("walk and idle clips loop without a pose discontinuity", () => {
   }
 });
 
-test("both hands visibly swing beside the torso through a walking cycle", () => {
-  const samples = sampleWalk();
+test("both hands visibly swing beside the torso through a running cycle", () => {
+  const samples = sampleRun();
   for (const hand of ["LeftHand", "RightHand"]) {
     const depths = samples.map((frame) => frame[hand].z);
     assert.ok(Math.max(...depths) - Math.min(...depths) > 0.3, `${hand} must swing, not just twist`);
@@ -56,14 +56,17 @@ test("both hands visibly swing beside the torso through a walking cycle", () => 
   }
 });
 
-test("retargeted feet alternate lift while keeping the support foot near the ground", () => {
-  const samples = sampleWalk();
+test("running feet push off, lift and return to the keys", () => {
+  const samples = sampleRun();
   for (const foot of ["LeftFoot", "RightFoot"]) {
     const heights = samples.map((frame) => frame[foot].y);
     assert.ok(Math.min(...heights) > 0.08, "ankles must not sink into the keys");
-    assert.ok(Math.max(...heights) - Math.min(...heights) > 0.2, "feet must lift during swing");
+    assert.ok(Math.max(...heights) - Math.min(...heights) > 0.3, "running feet must lift behind the body");
   }
-  assert.ok(samples.every((frame) => Math.min(frame.LeftFoot.y, frame.RightFoot.y) < 0.24));
+  for (const foot of ["LeftFoot", "RightFoot"]) {
+    assert.ok(samples.some((frame) => frame[foot].y < 0.2), "each foot must return to contact");
+  }
+  assert.ok(samples.some((frame) => Math.min(frame.LeftFoot.y, frame.RightFoot.y) > 0.24), "a run must include an airborne stride");
 });
 
 test("animation never moves the character root outside the physics controller", () => {
