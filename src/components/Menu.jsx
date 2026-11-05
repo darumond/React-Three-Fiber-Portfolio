@@ -40,7 +40,6 @@ export const Menu = (props) => {
           <div className="flex-1 flex items-start justify-center flex-col gap-6 p-8">
             <MenuButton label="About" onClick={() => navigate(0)} />
             <MenuButton label="Piano" onClick={() => navigate(1)} />
-            <MenuButton label="Projects" onClick={() => navigate(2)} />
           </div>
         </div>
       </>

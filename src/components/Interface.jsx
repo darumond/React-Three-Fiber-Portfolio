@@ -1,8 +1,4 @@
-import { useAtom } from "jotai";
-import { currentProjectAtom, projects } from "./Projects";
 
-import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
-import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import { motion } from "framer-motion";
 import { PianoControls } from "./PianoControls";
 
@@ -39,7 +35,6 @@ export const Interface = () => {
     <div className="flex flex-col items-center w-screen">
       <AboutSection />
       <PianoSection />
-      <ProjectsSection />
     </div>
   );
 };
@@ -140,39 +135,3 @@ const PianoSection = () => (
   </section>
 );
 
-const ProjectsSection = () => {
-  const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
-
-  const nextProject = () => {
-    setCurrentProject((currentProject + 1) % projects.length);
-  };
-
-  const previousProject = () => {
-    setCurrentProject((currentProject - 1 + projects.length) % projects.length);
-  };
-  const iconSize = 70;
-
-  const iconStyle = {
-    fontSize: iconSize,
-  };
-
-  return (
-    <Section>
-      <div className="text-3xl md:text-6xl h-full w-full text-center  mt-10 font-poppins font-extrabold">
-        <button
-          className="hover:text-purple-light transition-colors"
-          onClick={previousProject}
-        >
-          <ArrowCircleLeftOutlinedIcon style={iconStyle} />
-        </button>
-        Projects
-        <button
-          className="hover:text-purple-light transition-colors"
-          onClick={nextProject}
-        >
-          <ArrowCircleRightOutlinedIcon style={iconStyle} />
-        </button>
-      </div>
-    </Section>
-  );
-};
