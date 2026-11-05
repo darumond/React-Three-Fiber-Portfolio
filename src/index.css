@@ -57,7 +57,7 @@ body {
 .piano-section-number { display: none; }
 @media (max-width: 767px) {
   .piano-heading { top: 26px; left: 24px; }
-  .piano-description { display: none; }
+  .piano-description { font-size: 10px; }
   .piano-controls { bottom: max(22px, env(safe-area-inset-bottom)); }
   .piano-controls-main { gap: 15px; }
 }
@@ -78,52 +78,85 @@ body {
 @media (max-height: 540px) { .piano-joystick { width: 60px; height: 60px; } .piano-jump { width: 44px; height: 44px; } }
 
 .piano-inscription {
-  width: 640px;
+  --journey: 0;
+  width: 560px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: #eee7d8;
   text-align: center;
   opacity: 0;
-  transition: opacity .45s ease;
+  transition: opacity .4s ease;
   font-family: Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
+  pointer-events: none;
 }
 .piano-inscription.is-visible { opacity: 1; }
 .piano-inscription-label {
-  margin: 0 0 6px;
+  display: flex;
+  justify-content: center;
+  gap: .5em;
+  margin: 0 0 10px;
   color: #b6a17a;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 20px;
-  letter-spacing: .3em;
+  line-height: 18px;
+  letter-spacing: .22em;
   text-transform: uppercase;
 }
 .piano-inscription-languages {
+  display: flex;
+  justify-content: center;
+  gap: .25em;
+  flex-wrap: wrap;
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 32px;
   font-weight: 400;
-  line-height: 44px;
+  line-height: 36px;
   letter-spacing: -.02em;
-  white-space: nowrap;
 }
-.piano-inscription-languages span { padding: 0 7px; color: #a18b61; }
+.piano-inscription-line { display: flex; width: 100%; justify-content: center; gap: .27em; }
+.piano-inscription-personal { font-style: italic; }
+.piano-reveal {
+  --reveal: 0;
+  display: inline-block;
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 12px));
+  filter: blur(calc((1 - var(--reveal)) * 4px));
+}
+.piano-inscription-flourish {
+  position: absolute;
+  bottom: 4px;
+  width: 42px;
+  height: 1px;
+  background: #ae8a43;
+  opacity: var(--journey);
+  transform: scaleX(var(--journey));
+  transform-origin: left;
+}
 .piano-inscription-link {
+  position: relative;
   display: inline-flex;
-  min-height: 60px;
+  min-height: 58px;
   align-items: center;
-  gap: 13px;
-  padding: 0 24px;
+  gap: 12px;
+  padding: 0 28px;
   color: #c6ad76;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 26px;
+  font-size: 22px;
+  line-height: 28px;
   letter-spacing: .04em;
   text-decoration: none;
   transition: color .2s ease;
+  pointer-events: none;
 }
-.piano-inscription-link > span:first-child { color: #a39e93; }
-.piano-inscription-link-divider { color: #76664a; font-size: 17px; }
-.piano-inscription-arrow { font-size: 25px; transition: transform .2s ease; }
 .piano-inscription-link:hover { color: #f2dca7; }
-.piano-inscription-link:hover .piano-inscription-arrow { transform: translate(2px, -2px); }
-.piano-inscription-link:focus-visible { outline: 1px solid #c6ad76; outline-offset: -10px; border-radius: 3px; }
-@media (prefers-reduced-motion: reduce) { .piano-inscription, .piano-inscription-link, .piano-inscription-arrow { transition: none; } }
+.piano-inscription-link::before { content: ""; position: absolute; inset: -15px 0; }
+.piano-inscription-link:focus-visible { outline: 1px solid #c6ad76; outline-offset: -5px; border-radius: 3px; }
+@media (max-width: 767px) { .piano-inscription-label { font-size: 18px; line-height: 22px; letter-spacing: .16em; } }
+@media (prefers-reduced-motion: reduce) {
+  .piano-inscription, .piano-inscription-link { transition: none; }
+  .piano-reveal { transform: none; filter: none; }
+}

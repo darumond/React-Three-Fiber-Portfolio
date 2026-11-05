@@ -7,6 +7,7 @@ import { Avatar } from "./Avatar";
 import { Background } from "./Background";
 import { PianoScene } from "./PianoScene";
 import { tourPhase } from "./sceneTransition";
+import { PIANIST_START_X, WALK_LIMIT } from "./pianoMotion";
 
 export const Experience = ({ menuOpened }) => {
   const { size } = useThree();
@@ -21,7 +22,7 @@ export const Experience = ({ menuOpened }) => {
   const pianoAnchor = useRef();
   const seat = useRef();
   const officeAvatar = useRef();
-  const follow = useRef({ x: 0.25, z: 0 });
+  const follow = useRef({ x: Math.max(PIANIST_START_X, -WALK_LIMIT + (mobile ? 0.95 : 2)), z: 0 });
   const lighting = useRef(0);
   const menu = useRef(0);
   const [ready, setReady] = useState(false);

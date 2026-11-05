@@ -141,7 +141,7 @@ function Bench({ materials }) {
   </group>;
 }
 
-export function GrandPiano({ children }) {
+export function GrandPiano({ children, journey }) {
   const assets = useMemo(() => {
     const env = studioReflection(), wood = soundboardTexture(), logo = nameplateTexture();
     const black = new THREE.MeshPhysicalMaterial({ color: BLACK, roughness: 0.16, metalness: 0.12, clearcoat: 1, clearcoatRoughness: 0.08, envMap: env, envMapIntensity: 0.65 });
@@ -170,10 +170,10 @@ export function GrandPiano({ children }) {
     <LacquerBlock size={[15.5, 0.42, 0.6]} position={[0, -0.12, 2.48]} material={assets.black} />
     <LacquerBlock size={[15.45, 0.025, 0.035]} position={[0, 0.11, 2.65]} material={assets.brass} radius={0.008} />
     <LacquerBlock size={[15.45, 1.65, 0.32]} position={[0, 0.82, -1.92]} material={assets.black} />
-    <mesh position={[0, 1.34, -1.752]}>
-      <planeGeometry args={[1.68, 0.42]} /><meshBasicMaterial map={assets.logo} transparent toneMapped={false} depthWrite={false} />
+    <mesh position={[0, 1.45, -1.752]}>
+      <planeGeometry args={[1.5, 0.375]} /><meshBasicMaterial map={assets.logo} transparent toneMapped={false} depthWrite={false} />
     </mesh>
-    <PianoInscription />
+    <PianoInscription journey={journey} />
     <LacquerBlock size={[14.3, 0.035, 0.055]} position={[0, 0.42, -1.7]} material={assets.leather} radius={0.008} />
     {[-7.35, 7.35].map((x) => <LacquerBlock key={x} size={[0.65, 0.55, 4.4]} position={[x, 0.05, 0.35]} material={assets.black} radius={0.12} />)}
     {children}

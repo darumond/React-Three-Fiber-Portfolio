@@ -4,7 +4,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import * as THREE from "three";
 import { Avatar } from "./Avatar";
 import {
-  createPianist, keyAtPosition, stepPianist, WALK_LIMIT, RUN_SPEED, RUN_STRIDE, surfaceHeightAt,
+  createPianist, keyAtPosition, stepPianist, WALK_LIMIT, PIANIST_START_X, RUN_SPEED, RUN_STRIDE, surfaceHeightAt,
 } from "./pianoMotion";
 import {
   pianoActiveAtom, pianoDirectionAtom, pianoJumpAtom, pianoReplayAtom,
@@ -18,6 +18,7 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
   const character = useRef();
   const shadow = useRef();
   const player = useRef(createPianist());
+  const journey = useRef({ furthestX: PIANIST_START_X, landed: false, generation: 0 });
   const pressed = useRef(-1);
   const lastNote = useRef(-1);
   const facing = useRef(Math.PI);
@@ -35,6 +36,7 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
   const setDirection = useSetAtom(pianoDirectionAtom);
   const enabled = active && !menuOpened;
   const avatarScale = size.width < 768 ? 0.38 : 0.34;
+  const startCameraX = Math.max(PIANIST_START_X, -WALK_LIMIT + (size.width < 768 ? 0.95 : 2));
 
   useEffect(() => {
     setActive(enabled);
@@ -47,16 +49,17 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
     if (atHome) {
       setEntered(false);
       pressed.current = -1;
-      cameraFollow.current = { x: 0.25, z: 0 };
+      cameraFollow.current = { x: startCameraX, z: 0 };
     }
-  }, [atHome, cameraFollow]);
+  }, [atHome, cameraFollow, startCameraX]);
 
   useEffect(() => {
     if (!active || (entered && lastReplay.current === replay)) return;
     lastReplay.current = replay;
     setEntered(true);
-    cameraFollow.current = { x: 0.25, z: 0 };
+    cameraFollow.current = { x: startCameraX, z: 0 };
     player.current = createPianist();
+    journey.current = { furthestX: PIANIST_START_X, landed: false, generation: journey.current.generation + 1 };
     facing.current = Math.PI;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       player.current.y = 0;
@@ -68,7 +71,7 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
     setAnimation("Luc_Falling");
     locomotion.current.speed = 0;
     landing.current = { previous: false, remaining: 0 };
-  }, [active, replay, entered, cameraFollow]);
+  }, [active, replay, entered, cameraFollow, startCameraX]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -113,6 +116,8 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
     } : { x: 0, z: 0, jump: false };
     const current = player.current;
     stepPianist(current, controls, delta);
+    journey.current.landed = current.hasLanded;
+    if (enabled && current.hasLanded) journey.current.furthestX = Math.max(journey.current.furthestX, current.x);
     const followLimit = WALK_LIMIT - (size.width < 768 ? 0.95 : 2);
     const followX = THREE.MathUtils.clamp(current.x, -followLimit, followLimit);
     cameraFollow.current.x = THREE.MathUtils.damp(cameraFollow.current.x, followX, 4, delta);
@@ -148,13 +153,13 @@ export function PianoScene({ active, atHome, menuOpened, cameraFollow, lighting,
   return (
     <group>
       <group>
-        <PianoEnvironment pressed={pressed} lighting={lighting} worldScale={worldScale} />
-        <mesh ref={shadow} visible={entered} rotation-x={-Math.PI / 2} position={[0.25, 0.12, 1.68]}>
+        <PianoEnvironment pressed={pressed} lighting={lighting} worldScale={worldScale} journey={journey} />
+        <mesh ref={shadow} visible={entered} rotation-x={-Math.PI / 2} position={[PIANIST_START_X, 0.12, 1.68]}>
           <circleGeometry args={[0.18, 24]} />
           <meshBasicMaterial color="#3d3e1f" transparent opacity={0.2} depthWrite={false} />
         </mesh>
         {entered && (
-          <group ref={character} position={[0.25, 6, 1.68]} rotation-y={Math.PI} scale={avatarScale}>
+          <group ref={character} position={[PIANIST_START_X, 6, 1.68]} rotation-y={Math.PI} scale={avatarScale}>
             <Avatar animation={animation} locomotion={locomotion} />
           </group>
         )}
