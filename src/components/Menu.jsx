@@ -41,7 +41,6 @@ export const Menu = (props) => {
             <MenuButton label="About" onClick={() => navigate(0)} />
             <MenuButton label="Piano" onClick={() => navigate(1)} />
             <MenuButton label="Projects" onClick={() => navigate(2)} />
-            <MenuButton label="Contact" onClick={() => navigate(3)} />
           </div>
         </div>
       </>
