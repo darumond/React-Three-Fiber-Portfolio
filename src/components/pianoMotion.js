@@ -3,6 +3,7 @@ export const KEY_WIDTH = 14 / WHITE_KEY_COUNT;
 export const PIANO_WIDTH = WHITE_KEY_COUNT * KEY_WIDTH;
 // Preserve space for the running stride beside the outer key cheeks.
 export const WALK_LIMIT = PIANO_WIDTH / 2 - 0.25;
+export const PIANIST_START_X = -WALK_LIMIT + 0.65;
 export const RUN_SPEED = 2.8;
 // Full-size stride matches the planted-foot travel in the authored sprint.
 export const RUN_STRIDE = 5.6;
@@ -12,7 +13,7 @@ export const BLACK_KEY_HEIGHT = 0.3;
 export const BLACK_KEY_AFTER = [0, 2, 3, 5, 6];
 
 export const createPianist = () => ({
-  x: 0.25, z: 1.68, y: 6,
+  x: PIANIST_START_X, z: 1.68, y: 6,
   velocityX: 0, velocityZ: 0, velocityY: 0,
   landed: false, hasLanded: false, distance: 0,
   jumpHeld: false, jumpBuffer: 0, coyote: 0,

@@ -8,19 +8,16 @@ export const ScrollManager = ({ section, onSectionChange, menuOpened }) => {
   const data = useScroll();
   const isAnimating = useRef(false);
   const currentSection = useRef(section);
-  const previousSection = useRef(section);
   const gesture = useRef({ lastAt: -Infinity, consumed: false, total: 0 });
   currentSection.current = section;
 
   useEffect(() => {
     data.fill.classList.add("top-0", "absolute");
     data.el.style.overscrollBehavior = "contain";
-    const pianoMove = section <= 1 && previousSection.current <= 1;
-    previousSection.current = section;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     isAnimating.current = true;
     const tween = gsap.to(data.el, {
-      duration: reduced || Math.abs(data.el.scrollTop - section * data.el.clientHeight) < 2 ? 0 : pianoMove ? 1.65 : 1.15,
+      duration: reduced || Math.abs(data.el.scrollTop - section * data.el.clientHeight) < 2 ? 0 : 1.65,
       ease: "sine.inOut",
       scrollTop: section * data.el.clientHeight,
       onComplete: () => { isAnimating.current = false; },

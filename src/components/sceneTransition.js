@@ -4,11 +4,10 @@ export const easeTour = (value) => {
   return t * t * t * (t * (t * 6 - 15) + 10);
 };
 
-export function tourPhase(offset, pages = 3) {
+export function tourPhase(offset, pages = 2) {
   const page = clamp(offset * (pages - 1), 0, pages - 1);
   const zoom = easeTour(page);
-  const departure = easeTour(page - 1);
-  return { page, zoom, departure, cameraBlend: zoom * (1 - departure), ready: Math.abs(page - 1) < 0.012 };
+  return { page, zoom, cameraBlend: zoom, ready: Math.abs(page - 1) < 0.012 };
 }
 
 // Momentum belongs to the gesture that started it, even if the camera move

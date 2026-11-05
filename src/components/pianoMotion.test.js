@@ -2,11 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   createPianist, stepPianist, keyAtPosition, keyFrequency, surfaceHeightAt,
-  WALK_LIMIT, RUN_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT, KEY_WIDTH, BLACK_KEY_AFTER,
+  WALK_LIMIT, PIANIST_START_X, RUN_SPEED, MIN_Z, MAX_Z, WHITE_KEY_COUNT, BLACK_KEY_HEIGHT, KEY_WIDTH, BLACK_KEY_AFTER,
 } from "./pianoMotion.js";
 
 const idle = { x: 0, z: 0, jump: false };
-const grounded = () => ({ ...createPianist(), y: 0, landed: true, hasLanded: true });
+const grounded = () => ({ ...createPianist(), x: 0.25, y: 0, landed: true, hasLanded: true });
 const run = (player, input, frames, fps = 60) => {
   for (let frame = 0; frame < frames; frame++) stepPianist(player, input, 1 / fps);
 };
@@ -14,7 +14,8 @@ const run = (player, input, frames, fps = 60) => {
 test("the entrance fall lands before directional input takes effect", () => {
   const player = createPianist();
   stepPianist(player, { x: 1, z: -1 }, 1 / 60);
-  assert.equal(player.x, 0.25);
+  assert.equal(player.x, PIANIST_START_X);
+  assert.ok(player.x < -WALK_LIMIT + 1 && player.x > -WALK_LIMIT);
   assert.equal(player.z, 1.68);
   assert.equal(player.hasLanded, false);
   run(player, idle, 120);

@@ -39,7 +39,7 @@ function BlackKey({ index, pressed }) {
   </group>;
 }
 
-export function PianoEnvironment({ pressed, lighting, worldScale = 1 }) {
+export function PianoEnvironment({ pressed, lighting, worldScale = 1, journey }) {
   const keyLight = useRef();
   const lightTarget = useRef();
   const fill = useRef();
@@ -51,7 +51,7 @@ export function PianoEnvironment({ pressed, lighting, worldScale = 1 }) {
     hemisphere.current.intensity = 0.6 * lighting.current;
   });
   return <group>
-    <GrandPiano>
+    <GrandPiano journey={journey}>
       {Array.from({ length: WHITE_KEY_COUNT }, (_, index) => <WhiteKey key={index} index={index} pressed={pressed} />)}
       {Array.from({ length: WHITE_KEY_COUNT - 1 }, (_, index) => BLACK_KEY_AFTER.includes(index % 7) &&
         <BlackKey key={index} index={index} pressed={pressed} />)}
